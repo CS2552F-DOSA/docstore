@@ -1,0 +1,42 @@
+[submodule "clsi/src"]
+	path = clsi/src
+	url = https://github.com/sharelatex/clsi-sharelatex.git
+[submodule "contacts/src"]
+	path = contacts/src
+	url = https://github.com/sharelatex/contacts.git
+[submodule "docstore/src"]
+	path = docstore/src
+	url = https://github.com/sharelatex/docstore.git
+[submodule "filestore/src"]
+	path = filestore/src
+	url = https://github.com/sharelatex/filestore.git
+[submodule "metrics/src"]
+	path = metrics/src
+	url = https://github.com/sharelatex/metrics.git
+[submodule "previewer/src"]
+	path = previewer/src
+	url = https://github.com/sharelatex/previewer.git
+[submodule "spelling/src"]
+	path = spelling/src
+	url = https://github.com/sharelatex/spelling.git
+[submodule "tags/src"]
+	path = tags/src
+	url = https://github.com/sharelatex/tags.git
+[submodule "track-changes/src"]
+	path = track-changes/src
+	url = https://github.com/sharelatex/track-changes.git
+[submodule "web/src"]
+	path = web/src
+	url = https://github.com/sharelatex/web.git
+[submodule "chat/src"]
+	path = chat/src
+	url = https://github.com/sharelatex/chat.git
+[submodule "document-updater"]
+	path = document-updater
+	url = https://github.com/sharelatex/document-updater-sharelatex.git
+[submodule "github-latex-ci"]
+	path = github-latex-ci
+	url = https://github.com/sharelatex/github-latex-ci.git
+[submodule "real-time/src"]
+	path = real-time/src
+	url = https://github.com/sharelatex/real-time-sharelatex.git

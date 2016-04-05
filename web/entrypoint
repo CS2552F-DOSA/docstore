@@ -1,0 +1,12 @@
+#!/bin/bash -xe
+
+mkdir -p /app/data/{dumpFolder,logs,pdfs,uploads,zippedProjects}
+chown -R node /app/data/*
+set +e
+while true; do
+  if [ $# -lt 1 ]; then
+    gosu node node app.js
+  else
+    gosu node "$@"
+  fi
+done

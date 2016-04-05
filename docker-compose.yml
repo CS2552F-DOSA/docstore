@@ -1,0 +1,288 @@
+version: "2"
+services:
+  base:
+    image: mic92/sharelatex-base
+    build:
+      context: base
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    command: /bin/true
+    labels:
+      io.rancher.container.start_once: "True"
+  nginx:
+    image: mic92/sharelatex-nginx
+    build:
+      context: nginx
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    ports:
+      - "80:80"
+    links:
+      - web
+      - real-time
+    depends_on:
+      - base
+  influxdb:
+    image: mic92/sharelatex-influxdb
+    build:
+      context: influxdb
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    depends_on:
+      - base
+    volumes:
+      - datainfluxdb:/data
+  grafana:
+    image: mic92/sharelatex-grafana
+    build:
+      context: grafana
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    links:
+      - influxdb
+      - postgres
+    ports:
+      - "3000:3000"
+  redis:
+    image: mic92/sharelatex-redis
+    build:
+      context: redis
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    volumes:
+      - dataredis:/data
+  mongo:
+    image: mic92/sharelatex-mongo
+    build:
+      context: mongo
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    volumes:
+      - datamongo:/data/db
+  postgres:
+    image: mic92/sharelatex-postgres
+    build:
+      context: postgres
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    volumes:
+      - datapostgres:/var/lib/postgresql/data
+  nodejs:
+    image: mic92/sharelatex-nodejs
+    build:
+      context: nodejs
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    command: /bin/true
+    depends_on:
+      - base
+    labels:
+      io.rancher.container.start_once: "True"
+  chat:
+    image: mic92/sharelatex-chat
+    build:
+      context: chat
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    links:
+      - mongo
+      - redis
+    depends_on:
+      - nodejs
+  clsi:
+    image: mic92/sharelatex-clsi
+    build:
+      context: clsi
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    links:
+      - postgres
+    depends_on:
+      - nodejs
+  contacts:
+    image: mic92/sharelatex-contacts
+    build:
+      context: contacts
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    links:
+      - mongo
+    depends_on:
+      - nodejs
+  docstore:
+    image: mic92/sharelatex-docstore
+    build:
+      context: docstore
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    links:
+      - mongo
+    depends_on:
+      - nodejs
+  document-updater:
+    image: mic92/sharelatex-document-updater
+    build:
+      context: document-updater
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    links:
+      - mongo
+      - redis
+    depends_on:
+      - nodejs
+  real-time:
+    image: mic92/sharelatex-real-time
+    build:
+      context: real-time
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    links:
+      - redis
+      - document-updater
+    depends_on:
+      - nodejs
+  filestore:
+    image: mic92/sharelatex-filestore
+    build:
+      context: filestore
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    volumes:
+      - datafilestore:/data
+    depends_on:
+      - nodejs
+  spelling:
+    image: mic92/sharelatex-spelling
+    build:
+      context: spelling
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    links:
+      - mongo
+    depends_on:
+      - nodejs
+  tags:
+    image: mic92/sharelatex-tags
+    build:
+      context: tags
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    links:
+      - mongo
+    depends_on:
+      - nodejs
+  track-changes:
+    image: mic92/sharelatex-track-changes
+    build:
+      context: track-changes
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    links:
+      - mongo
+      - redis
+      - docstore
+      - document-updater
+    depends_on:
+      - nodejs
+  web:
+    image: mic92/sharelatex-web
+    build:
+      context: web
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    volumes:
+      - dataweb:/app/data
+    links:
+      - mongo
+      - redis
+      - contacts
+      - docstore
+      - document-updater
+      - filestore
+      - spelling
+      - tags
+      - chat
+      - clsi
+    depends_on:
+      - nodejs
+volumes:
+    dataredis:
+      driver: local
+    datamongo:
+      driver: local
+    datapostgres:
+      driver: local
+    datafilestore:
+      driver: local
+    dataweb:
+      driver: local
+    datainfluxdb:
+      driver: local

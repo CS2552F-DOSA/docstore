@@ -1,0 +1,104 @@
+nginx:
+  health_check:
+    port: 80
+    interval: 2000
+    request_line: GET /nginx_status HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+nginx:
+  health_check:
+    port: 80
+    interval: 2000
+    request_line: GET /health HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+chat:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+clsi:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+contacts:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+docstore:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+document-updater:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+real-time:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+filestore:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+spelling:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+tags:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+track-changes:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
+web:
+  health_check:
+    port: 3000
+    interval: 2000
+    request_line: GET /health_check HTTP/1.0
+    unhealthy_threshold: 3
+    response_timeout: 2000
+    healthy_threshold: 2
