@@ -11,6 +11,8 @@ compose["services"].delete("nodejs")
 compose["services"].each do |name, service|
   service.delete("build")
   service.delete("depends_on")
-  service["image"] = "registry.local:5000/#{service["image"]}"
+  if service["image"].start_with?("mic92")
+    service["image"] = "registry.local:5000/#{service["image"]}"
+  end
 end
 YAML.dump(compose["services"], $stdout)
