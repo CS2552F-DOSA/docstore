@@ -78,9 +78,9 @@ module.exports =
 			url : "http://track-changes:3000"
 		docstore:
 			url : "http://docstore:3000"
-			pubUrl: "http://docs.sharelatex.local"
+			pubUrl: "http://docs.local"
 		chat:
-			url: "http://chat.sharelatex.local"
+			url: "http://public-chat.local"
 			internal_url: "http://chat:3000"
 		blog:
 			port: 3008
