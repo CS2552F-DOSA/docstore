@@ -1,19 +1,10 @@
-nginx:
-  health_check:
-    port: 80
-    interval: 2000
-    request_line: GET /nginx_status HTTP/1.0
-    unhealthy_threshold: 3
-    response_timeout: 2000
-    healthy_threshold: 2
-nginx:
-  health_check:
-    port: 80
-    interval: 2000
-    request_line: GET /health HTTP/1.0
-    unhealthy_threshold: 3
-    response_timeout: 2000
-    healthy_threshold: 2
+loadbalancer:
+  load_balancer_config:
+    defaults:
+      - balance leastconn
+      - retries 3
+      - option keep-alive
+      - option forwardfor
 chat:
   health_check:
     port: 3000
@@ -55,6 +46,7 @@ document-updater:
     response_timeout: 2000
     healthy_threshold: 2
 real-time:
+  scale: 1
   health_check:
     port: 3000
     interval: 2000
@@ -95,6 +87,7 @@ track-changes:
     response_timeout: 2000
     healthy_threshold: 2
 web:
+  scale: 2
   health_check:
     port: 3000
     interval: 2000

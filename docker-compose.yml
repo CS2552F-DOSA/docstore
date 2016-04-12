@@ -1,5 +1,17 @@
 version: "2"
 services:
+  sharelatex:
+    image: rancher/dns-service
+    links:
+      - loadbalancer
+  public-chat:
+    image: rancher/dns-service
+    links:
+      - loadbalancer
+  docs:
+    image: rancher/dns-service
+    links:
+      - loadbalancer
   base:
     image: mic92/sharelatex-base
     build:
@@ -12,22 +24,21 @@ services:
     command: /bin/true
     labels:
       io.rancher.container.start_once: "True"
-  nginx:
-    image: mic92/sharelatex-nginx
-    build:
-      context: nginx
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
+  loadbalancer:
+    image: rancher/load-balancer-service
+    labels:
+      io.rancher.scheduler.global: 'true'
+      io.rancher.loadbalancer.target.real-time: sharelatex.local/socket.io=3000
+      io.rancher.loadbalancer.target.web: sharelatex.local=3000
+      io.rancher.loadbalancer.target.chat: public-chat.local=3000
+      io.rancher.loadbalancer.target.docstore: docs.local=3000
     ports:
-      - "80:80"
+      - 80:80
     links:
-      - web
-      - real-time
-    depends_on:
-      - base
+      - web:web1
+      - real-time:real-time1
+      - chat:chat1
+      - docstore:docstore1
   influxdb:
     image: mic92/sharelatex-influxdb
     build:
