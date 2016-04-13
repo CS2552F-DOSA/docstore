@@ -24,6 +24,7 @@ services:
     command: /bin/true
     labels:
       io.rancher.container.start_once: "True"
+      tk.higgsboson.no-scheduling: "True"
   nodejs:
     image: mic92/sharelatex-nodejs
     build:
@@ -38,6 +39,7 @@ services:
       - base
     labels:
       io.rancher.container.start_once: "True"
+      tk.higgsboson.no-scheduling: "True"
   loadbalancer:
     image: rancher/load-balancer-service
     ports:

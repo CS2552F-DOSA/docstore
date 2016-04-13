@@ -6,8 +6,7 @@ if ARGV.size < 1
 end
 
 compose = YAML.load_file(ARGV.first)
-compose["services"].delete("base")
-compose["services"].delete("nodejs")
+compose["services"].delete_if {|_, srv| srv["labels"] && srv["labels"]["tk.higgsboson.no-scheduling"]}
 compose["services"].each do |name, service|
   service.delete("build")
   service.delete("depends_on")
