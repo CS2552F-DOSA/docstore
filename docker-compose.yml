@@ -24,92 +24,6 @@ services:
     command: /bin/true
     labels:
       io.rancher.container.start_once: "True"
-  loadbalancer:
-    image: rancher/load-balancer-service
-    labels:
-      io.rancher.scheduler.global: 'true'
-      io.rancher.loadbalancer.target.real-time: sharelatex.local/socket.io=3000
-      io.rancher.loadbalancer.target.web: sharelatex.local=3000
-      io.rancher.loadbalancer.target.chat: public-chat.local=3000
-      io.rancher.loadbalancer.target.docstore: docs.local=3000
-    ports:
-      - 80:80
-    links:
-      - web:web1
-      - real-time:real-time1
-      - chat:chat1
-      - docstore:docstore1
-  influxdb:
-    image: mic92/sharelatex-influxdb
-    build:
-      context: influxdb
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
-    ports:
-      - "8083:8083"
-      - "8086:8086"
-    depends_on:
-      - base
-    volumes:
-      - datainfluxdb:/data
-  grafana:
-    image: mic92/sharelatex-grafana
-    build:
-      context: grafana
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
-    depends_on:
-      - base
-    links:
-      - influxdb
-      - postgres
-    ports:
-      - "3000:3000"
-  redis:
-    image: mic92/sharelatex-redis
-    build:
-      context: redis
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
-    depends_on:
-      - base
-    volumes:
-      - dataredis:/data
-  mongo:
-    image: mic92/sharelatex-mongo
-    build:
-      context: mongo
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
-    depends_on:
-      - base
-    volumes:
-      - datamongo:/data/db
-  postgres:
-    image: mic92/sharelatex-postgres
-    build:
-      context: postgres
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
-    depends_on:
-      - base
-    volumes:
-      - datapostgres:/var/lib/postgresql/data
   nodejs:
     image: mic92/sharelatex-nodejs
     build:
@@ -124,6 +38,21 @@ services:
       - base
     labels:
       io.rancher.container.start_once: "True"
+  loadbalancer:
+    image: rancher/load-balancer-service
+    ports:
+      - 80:80
+    links:
+      - web:web1
+      - real-time:real-time1
+      - chat:chat1
+      - docstore:docstore1
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
+      io.rancher.loadbalancer.target.real-time: sharelatex.local/socket.io=3000
+      io.rancher.loadbalancer.target.web: sharelatex.local=3000
+      io.rancher.loadbalancer.target.chat: public-chat.local=3000
+      io.rancher.loadbalancer.target.docstore: docs.local=3000
   chat:
     image: mic92/sharelatex-chat
     build:
@@ -138,6 +67,8 @@ services:
       - redis
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
   clsi:
     image: mic92/sharelatex-clsi
     build:
@@ -151,6 +82,8 @@ services:
       - postgres
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
   contacts:
     image: mic92/sharelatex-contacts
     build:
@@ -164,6 +97,8 @@ services:
       - mongo
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
   docstore:
     image: mic92/sharelatex-docstore
     build:
@@ -177,6 +112,8 @@ services:
       - mongo
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
   document-updater:
     image: mic92/sharelatex-document-updater
     build:
@@ -191,6 +128,8 @@ services:
       - redis
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
   real-time:
     image: mic92/sharelatex-real-time
     build:
@@ -205,6 +144,8 @@ services:
       - document-updater
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
   filestore:
     image: mic92/sharelatex-filestore
     build:
@@ -218,6 +159,8 @@ services:
       - datafilestore:/data
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
   spelling:
     image: mic92/sharelatex-spelling
     build:
@@ -231,6 +174,8 @@ services:
       - mongo
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
   tags:
     image: mic92/sharelatex-tags
     build:
@@ -244,6 +189,8 @@ services:
       - mongo
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
   track-changes:
     image: mic92/sharelatex-track-changes
     build:
@@ -260,6 +207,8 @@ services:
       - document-updater
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
   web:
     image: mic92/sharelatex-web
     build:
@@ -284,6 +233,123 @@ services:
       - clsi
     depends_on:
       - nodejs
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=application'
+  redis:
+    image: mic92/sharelatex-redis
+    build:
+      context: redis
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    volumes:
+      - dataredis:/data
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=database'
+  mongo:
+    image: mic92/sharelatex-mongo
+    build:
+      context: mongo
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    volumes:
+      - datamongo:/data/db
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=database'
+  postgres:
+    image: mic92/sharelatex-postgres
+    build:
+      context: postgres
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    volumes:
+      - datapostgres:/var/lib/postgresql/data
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=database'
+  influxdb:
+    image: mic92/sharelatex-influxdb
+    build:
+      context: influxdb
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    depends_on:
+      - base
+    volumes:
+      - datainfluxdb:/data
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
+  kapacitor:
+    image: mic92/sharelatex-kapacitor
+    build:
+      context: kapacitor
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    volumes:
+      - /data/kapacitor:/data
+    links:
+      - influxdb
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
+  telegraph:
+    image: mic92/sharelatex-telegraph
+    build:
+      context: telegraph
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    volumes:
+      - /data/kapacitor:/data
+    links:
+      - influxdb
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
+  grafana:
+    image: mic92/sharelatex-grafana
+    build:
+      context: grafana
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    links:
+      - influxdb
+      - postgres
+    ports:
+      - "3000:3000"
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
 volumes:
     dataredis:
       driver: local
