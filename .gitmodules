@@ -28,9 +28,6 @@
 [submodule "chat/src"]
 	path = chat/src
 	url = https://github.com/sharelatex/chat.git
-[submodule "document-updater"]
-	path = document-updater/src
-	url = https://github.com/sharelatex/document-updater-sharelatex.git
 [submodule "real-time/src"]
 	path = real-time/src
 	url = https://github.com/sharelatex/real-time-sharelatex.git
