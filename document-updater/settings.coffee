@@ -3,6 +3,10 @@ http = require('http')
 http.globalAgent.maxSockets = 300
 
 module.exports =
+	metrics:
+		statsd:
+			host: "telegraf.local"
+
 	internal:
 		documentupdater:
 			host: "0.0.0.0"

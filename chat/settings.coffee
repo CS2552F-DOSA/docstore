@@ -1,4 +1,8 @@
 module.exports =
+	metrics:
+		statsd:
+			host: "telegraf.local"
+
 	internal:
 		chat:
 			host: "0.0.0.0"

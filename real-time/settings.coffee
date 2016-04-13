@@ -1,4 +1,8 @@
 module.exports =
+	metrics:
+		statsd:
+			host: "telegraf.local"
+
 	redis:
 		web:
 			host: "redis"

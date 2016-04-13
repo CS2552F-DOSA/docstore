@@ -12,6 +12,19 @@ services:
     image: rancher/dns-service
     links:
       - loadbalancer
+  agent-instance:
+    image: mic92/agent
+    build:
+      context: agent-instance
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    command: /bin/true
+    labels:
+      io.rancher.container.start_once: "True"
+      tk.higgsboson.no-scheduling: "True"
   agent:
     image: mic92/agent
     build:

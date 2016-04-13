@@ -2,6 +2,10 @@ Path = require('path')
 TMP_DIR = Path.resolve(Path.join(__dirname, "../../", "tmp"))
 
 module.exports =
+	metrics:
+		statsd:
+			host: "telegraf.local"
+
 	mongo:
 		url: 'mongodb://mongo/sharelatex'
 	internal:

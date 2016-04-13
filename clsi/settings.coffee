@@ -1,6 +1,10 @@
 Path = require "path"
 
 module.exports =
+	metrics:
+		statsd:
+			host: "telegraf.local"
+
 	# Options are passed to Sequelize.
 	# See http://sequelizejs.com/documentation#usage-options for details
 	mysql:

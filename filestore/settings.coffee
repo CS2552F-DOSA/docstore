@@ -1,6 +1,10 @@
 Path = require "path"
 
 module.exports =
+	metrics:
+		statsd:
+			host: "telegraf.local"
+
 	internal:
 		filestore:
 			port: 3000
