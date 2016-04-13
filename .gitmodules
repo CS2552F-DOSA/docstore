@@ -34,3 +34,6 @@
 [submodule "document-updater/src"]
 	path = document-updater/src
 	url = https://github.com/sharelatex/document-updater-sharelatex.git
+[submodule "rancher"]
+	path = rancher
+	url = https://github.com/Mic92/rancher.git
