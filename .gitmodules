@@ -10,9 +10,6 @@
 [submodule "filestore/src"]
 	path = filestore/src
 	url = https://github.com/sharelatex/filestore.git
-[submodule "metrics/src"]
-	path = metrics/src
-	url = https://github.com/sharelatex/metrics.git
 [submodule "previewer/src"]
 	path = previewer/src
 	url = https://github.com/sharelatex/previewer.git
@@ -32,11 +29,8 @@
 	path = chat/src
 	url = https://github.com/sharelatex/chat.git
 [submodule "document-updater"]
-	path = document-updater
+	path = document-updater/src
 	url = https://github.com/sharelatex/document-updater-sharelatex.git
-[submodule "github-latex-ci"]
-	path = github-latex-ci
-	url = https://github.com/sharelatex/github-latex-ci.git
 [submodule "real-time/src"]
 	path = real-time/src
 	url = https://github.com/sharelatex/real-time-sharelatex.git
