@@ -34,3 +34,6 @@
 [submodule "real-time/src"]
 	path = real-time/src
 	url = https://github.com/sharelatex/real-time-sharelatex.git
+[submodule "document-updater/src"]
+	path = document-updater/src
+	url = https://github.com/sharelatex/document-updater-sharelatex.git
