@@ -1,4 +1,4 @@
 /.build
 /cache
 /data
-rancher/sharelatex/docker-compose.yml
+rancher-compose/sharelatex/docker-compose.yml
