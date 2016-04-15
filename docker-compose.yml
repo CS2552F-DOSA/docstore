@@ -93,6 +93,7 @@ services:
     links:
       - mongo
       - redis
+      - telegraf
     depends_on:
       - nodejs
     labels:
@@ -108,6 +109,7 @@ services:
         - no_proxy
     links:
       - postgres
+      - telegraf
     depends_on:
       - nodejs
     labels:
@@ -123,6 +125,7 @@ services:
         - no_proxy
     links:
       - mongo
+      - telegraf
     depends_on:
       - nodejs
     labels:
@@ -138,14 +141,15 @@ services:
         - no_proxy
     links:
       - mongo
+      - telegraf
     depends_on:
       - nodejs
     labels:
       io.rancher.scheduler.affinity:host_label: 'type=application'
-  document-updater:
-    image: mic92/sharelatex-document-updater
+  doc-updater:
+    image: mic92/sharelatex-doc-updater
     build:
-      context: document-updater
+      context: doc-updater
       args:
         - http_proxy
         - https_proxy
@@ -154,6 +158,7 @@ services:
     links:
       - mongo
       - redis
+      - telegraf
     depends_on:
       - nodejs
     labels:
@@ -169,7 +174,8 @@ services:
         - no_proxy
     links:
       - redis
-      - document-updater
+      - doc-updater
+      - telegraf
     depends_on:
       - nodejs
     labels:
@@ -183,6 +189,8 @@ services:
         - https_proxy
         - ftp_proxy
         - no_proxy
+    links:
+      - telegraf
     volumes:
       - datafilestore:/data
     depends_on:
@@ -200,6 +208,7 @@ services:
         - no_proxy
     links:
       - mongo
+      - telegraf
     depends_on:
       - nodejs
     labels:
@@ -215,6 +224,7 @@ services:
         - no_proxy
     links:
       - mongo
+      - telegraf
     depends_on:
       - nodejs
     labels:
@@ -232,7 +242,8 @@ services:
       - mongo
       - redis
       - docstore
-      - document-updater
+      - doc-updater
+      - telegraf
     depends_on:
       - nodejs
     labels:
@@ -253,12 +264,13 @@ services:
       - redis
       - contacts
       - docstore
-      - document-updater
+      - doc-updater
       - filestore
       - spelling
       - tags
       - chat
       - clsi
+      - telegraf
     depends_on:
       - nodejs
     labels:
@@ -343,10 +355,10 @@ services:
       - influxdb
     labels:
       io.rancher.scheduler.affinity:host_label: 'type=monitoring'
-  telegraph:
-    image: mic92/sharelatex-telegraph
+  telegraf:
+    image: mic92/sharelatex-telegraf
     build:
-      context: telegraph
+      context: telegraf
       args:
         - http_proxy
         - https_proxy
@@ -358,6 +370,9 @@ services:
       - /data/kapacitor:/data
     links:
       - influxdb
+      - postgres
+      - mongo
+      - redis
     labels:
       io.rancher.scheduler.affinity:host_label: 'type=monitoring'
   grafana:

@@ -4,7 +4,7 @@ http.globalAgent.maxSockets = 300
 module.exports =
 	metrics:
 		statsd:
-			host: "telegraf.local"
+			host: "telegraf"
 
 	internal:
 		docstore:

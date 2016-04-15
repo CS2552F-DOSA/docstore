@@ -1,7 +1,7 @@
 module.exports = Settings =
 	metrics:
 		statsd:
-			host: "telegraf.local"
+			host: "telegraf"
 	internal:
 		spelling:
 			port: 3000

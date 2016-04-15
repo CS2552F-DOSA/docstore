@@ -43,3 +43,9 @@
 [submodule "agent-instance"]
 	path = agent-instance
 	url = https://github.com/Mic92/agent-instance.git
+[submodule "doc-store/src"]
+	path = doc-store/src
+	url = https://github.com/sharelatex/docstore-sharelatex.git
+[submodule "doc-updater/src"]
+	path = doc-updater/src
+	url = https://github.com/sharelatex/document-updater-sharelatex.git

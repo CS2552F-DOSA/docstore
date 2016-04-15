@@ -1,7 +1,7 @@
 module.exports = Settings =
 	metrics:
 		statsd:
-			host: "telegraf.local"
+			host: "telegraf"
 
 	internal:
 		tags:
@@ -14,5 +14,3 @@ module.exports = Settings =
 	tags:
 		healthCheck:
 			user_id: "5620bece05509b0a7a3cbc62"
-
-

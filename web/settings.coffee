@@ -16,6 +16,10 @@ httpAuthUsers[httpAuthUser] = httpAuthPass
 sessionSecret = "secret-please-change"
 
 module.exports =
+	metrics:
+		statsd:
+			host: "telegraf"
+
 	# File storage
 	# ------------
 	#
@@ -66,7 +70,7 @@ module.exports =
 			user: httpAuthUser
 			pass: httpAuthPass
 		documentupdater:
-			url : "http://document-updater:#{docUpdaterPort}"
+			url : "http://doc-updater:#{docUpdaterPort}"
 		thirdPartyDataStore:
 			url : "http://localhost:3002"
 			emptyProjectFlushDelayMiliseconds: 5 * seconds

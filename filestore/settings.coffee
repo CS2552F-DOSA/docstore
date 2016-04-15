@@ -3,7 +3,7 @@ Path = require "path"
 module.exports =
 	metrics:
 		statsd:
-			host: "telegraf.local"
+			host: "telegraf"
 
 	internal:
 		filestore:

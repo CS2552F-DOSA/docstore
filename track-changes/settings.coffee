@@ -4,7 +4,7 @@ TMP_DIR = Path.resolve(Path.join(__dirname, "../../", "tmp"))
 module.exports =
 	metrics:
 		statsd:
-			host: "telegraf.local"
+			host: "telegraf"
 
 	mongo:
 		url: 'mongodb://mongo/sharelatex'

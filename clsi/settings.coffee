@@ -3,7 +3,7 @@ Path = require "path"
 module.exports =
 	metrics:
 		statsd:
-			host: "telegraf.local"
+			host: "telegraf"
 
 	# Options are passed to Sequelize.
 	# See http://sequelizejs.com/documentation#usage-options for details
