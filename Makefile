@@ -1,10 +1,14 @@
 all: build
 upload: build
 	ruby scripts/upload-container.rb docker-compose.yml
-build: .build
+.apt-cacher: apt-cacher-ng/Dockerfile
+	cd apt-cacher-ng && docker build --build-arg http_proxy -t mic92/apt-cacher-ng .
+	touch .apt-cacher
+build: .build .apt-cacher
 .build: docker-compose.yml $(wildcard */Dockerfile)
+	docker ps | grep -q apt-cacher-ng || docker run -d -p 3142:3142 --name apt-cacher-ng mic92/apt-cacher-ng
 	docker-compose build
 	touch .build
 rancher-compose: docker-compose.yml
 	ruby scripts/convert-compose-v2.rb docker-compose.yml > rancher-compose/sharelatex/docker-compose.yml
-	cd rancher-compose/sharelatex && rancher-compose up -u -p --batch-size 99
+	cd rancher-compose/sharelatex && rancher-compose up --upgrade --pull --batch-size 99
