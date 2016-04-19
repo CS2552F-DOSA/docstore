@@ -22,7 +22,7 @@ module.exports =
 			user: "sharelatex"
 			pass: "password"
 		documentupdater:
-			url: "http://document-updater:3000"
+			url: "http://doc-updater:3000"
 			
 	security:
 		sessionSecret: "secret-please-change"
