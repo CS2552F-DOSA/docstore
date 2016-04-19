@@ -1,5 +1,18 @@
 version: "2"
 services:
+  apt-cacher-ng:
+    image: mic92/apt-cacher-ng
+    build:
+      context: apt-cacher-ng
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    volumes:
+      - /data/apt:/var/cache/apt-cacher-ng
+    labels:
+      tk.higgsboson.no-scheduling: "True"
   sharelatex:
     image: rancher/dns-service
     links:
