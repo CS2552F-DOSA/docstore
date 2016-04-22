@@ -6,7 +6,7 @@ upload: build
 	touch .apt-cacher
 build: .build .apt-cacher
 .build: docker-compose.yml $(wildcard */Dockerfile)
-	docker ps | grep -q apt-cacher-ng || docker run -d -p 3142:3142 --name apt-cacher-ng mic92/apt-cacher-ng
+	docker ps | grep -q apt-cacher-ng || docker run -d -p 3142:3142 --restart=always -v /data/apt:/var/apt-cacher-ng --name apt-cacher-ng mic92/apt-cacher-ng
 	docker-compose build
 	touch .build
 rancher-compose: docker-compose.yml
