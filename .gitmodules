@@ -31,9 +31,6 @@
 [submodule "real-time/src"]
 	path = real-time/src
 	url = https://github.com/sharelatex/real-time-sharelatex.git
-[submodule "rancher"]
-	path = rancher
-	url = https://github.com/Mic92/rancher.git
 [submodule "agent-instance"]
 	path = agent-instance
 	url = https://github.com/Mic92/agent-instance.git

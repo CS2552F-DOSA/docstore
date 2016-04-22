@@ -36,20 +36,6 @@ services:
         - no_proxy
     command: /bin/true
     labels:
-      io.rancher.container.start_once: "True"
-      tk.higgsboson.no-scheduling: "True"
-  agent:
-    image: mic92/agent:v0.11.0
-    build:
-      context: rancher/agent
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
-    command: /bin/true
-    labels:
-      io.rancher.container.start_once: "True"
       tk.higgsboson.no-scheduling: "True"
   base:
     image: mic92/sharelatex-base
@@ -62,7 +48,6 @@ services:
         - no_proxy
     command: /bin/true
     labels:
-      io.rancher.container.start_once: "True"
       tk.higgsboson.no-scheduling: "True"
   nodejs:
     image: mic92/sharelatex-nodejs
@@ -77,7 +62,6 @@ services:
     depends_on:
       - base
     labels:
-      io.rancher.container.start_once: "True"
       tk.higgsboson.no-scheduling: "True"
   loadbalancer:
     image: rancher/load-balancer-service
