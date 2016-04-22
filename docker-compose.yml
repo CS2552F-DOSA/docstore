@@ -390,7 +390,28 @@ services:
       - "3000:3000"
     labels:
       io.rancher.scheduler.affinity:host_label: 'type=monitoring'
+  chronograf:
+    image: mic92/sharelatex-chronograf
+    build:
+      context: chronograf
+      args:
+        - http_proxy
+        - https_proxy
+        - ftp_proxy
+        - no_proxy
+    depends_on:
+      - base
+    links:
+      - influxdb
+    ports:
+      - "10000:10000"
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
+    volumes:
+      - datachronograf:/data
 volumes:
+    datachronograf:
+      driver: local
     dataredis:
       driver: local
     datamongo:
