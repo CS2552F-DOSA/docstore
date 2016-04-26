@@ -1,15 +1,20 @@
 FROM mic92/sharelatex-base
 
-RUN apt install -y git-core && \
+RUN curl -L "https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz" \
+      | tar -xz -C / && \
+    apt install -y git-core && \
     curl -L "https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz" | \
       tar -C /usr/local -xzf - && \
     mkdir /root/go && \
     export GOPATH=/root/go &&\
     /usr/local/go/bin/go get github.com/influxdata/kapacitor/cmd/kapacitor \
-                       github.com/influxdata/kapacitor/cmd/kapacitord && \
-    cp "$GOPATH/bin/kapacitor" "$GOPATH/bin/kapacitord" /usr/local/bin && \
+                       github.com/influxdata/kapacitor/cmd/kapacitord \
+                       git.higgsboson.tk/Mic92/kapacitor-scale && \
+    cp "$GOPATH/bin/kapacitor-scale" "$GOPATH/bin/kapacitor" "$GOPATH/bin/kapacitord" /usr/local/bin && \
     rm -rf /usr/local/go "$GOPATH" && \
     apt remove -y git-core
+VOLUME ["/data"]
 ADD kapacitor.conf /etc/kapacitor.conf
-
-CMD ["kapacitord" "-config" "/etc/kapacitor.toml"]
+ADD kapacitor-run /etc/services.d/kapacitor/run
+ADD kapacitor-scale-run /etc/services.d/kapacitor-scale/run
+ENTRYPOINT ["/init"]
