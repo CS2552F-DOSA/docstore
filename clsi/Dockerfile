@@ -1,4 +1,4 @@
-FROM nodejs
+FROM mic92/sharelatex-nodejs
 ADD src /app
 RUN mkdir -p /app/{compiles,caches} && \
     chown -R node /app/{compiles,caches} && \

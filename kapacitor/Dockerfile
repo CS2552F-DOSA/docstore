@@ -1,7 +1,7 @@
 FROM mic92/sharelatex-base
 
 RUN curl -L "https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6-overlay-amd64.tar.gz" \
-      | tar -xz -C / && \
+       | tar -xz -C / && \
     apt install -y git-core && \
     curl -L "https://storage.googleapis.com/golang/go1.6.linux-amd64.tar.gz" | \
       tar -C /usr/local -xzf - && \
