@@ -5,4 +5,3 @@ RUN npm install --save git+https://github.com/Mic92/metrics-sharelatex.git && np
 # writes a "spell.cache" file to its directory
 RUN echo "[]" > /app/spell.cache && chown -R node /app
 ADD settings.coffee /app/config/settings.coffee
-USER node

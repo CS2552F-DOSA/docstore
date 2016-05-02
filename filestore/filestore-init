@@ -1,13 +1,7 @@
-#!/bin/bash -e
+#!/bin/bash
 
 mkdir -p /data/{template_files,uploads,user_files}
 chown -R node /data/{template_files,uploads,user_files}
 ln -sf /data/template_files /app/template_files
 ln -sf /data/uploads /app/uploads
 ln -sf /data/user_files /app/user_files
-
-if [ $# -lt 1 ]; then
-  gosu node node app.js
-else
-  gosu node "$@"
-fi

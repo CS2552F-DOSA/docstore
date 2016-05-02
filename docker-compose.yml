@@ -189,7 +189,7 @@ services:
     links:
       - telegraf
     volumes:
-      - datafilestore:/data
+      - /mnt/share/filestore:/data
     depends_on:
       - nodejs
     labels:
@@ -337,6 +337,9 @@ services:
       io.rancher.scheduler.affinity:host_label: 'type=monitoring'
   kapacitor:
     image: mic92/sharelatex-kapacitor
+    environment:
+      - RANCHER_ACCESS_KEY=${RANCHER_ACCESS_KEY}
+      - RANCHER_SECRET_KEY=${RANCHER_SECRET_KEY}
     build:
       context: kapacitor
       args:
@@ -363,8 +366,8 @@ services:
         - no_proxy
     depends_on:
       - base
-    volumes:
-      - /data/kapacitor:/data
+    ports:
+      - "8125:8125"
     links:
       - influxdb
       - postgres
@@ -417,8 +420,6 @@ volumes:
     datamongo:
       driver: local
     datapostgres:
-      driver: local
-    datafilestore:
       driver: local
     dataweb:
       driver: local

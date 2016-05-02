@@ -1,9 +1,0 @@
-#!/bin/bash -xe
-
-mkdir -p /data/db
-chown -R redis:redis /data/db
-if [ "$1" = 'redis-server' ]; then
-  gosu redis redis-server /etc/redis.conf
-else
-  exec "$@"
-fi

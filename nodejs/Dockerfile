@@ -6,4 +6,5 @@ RUN apt install -y nodejs-legacy git-core python make npm && \
 WORKDIR "/app"
 ENV SHARELATEX_CONFIG=/app/config/settings.coffee
 EXPOSE 3000
-CMD ["node", "app.js"]
+ADD node-run /etc/services.d/node/run
+ENTRYPOINT ["/init"]

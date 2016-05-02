@@ -6,6 +6,7 @@ loadbalancer:
       - option keep-alive
       - option forwardfor
 chat:
+  scale: 1
   health_check:
     port: 3000
     interval: 2000
@@ -14,6 +15,7 @@ chat:
     response_timeout: 2000
     healthy_threshold: 2
 clsi:
+  scale: 1
   health_check:
     port: 3000
     interval: 2000
@@ -22,6 +24,7 @@ clsi:
     response_timeout: 2000
     healthy_threshold: 2
 contacts:
+  scale: 1
   health_check:
     port: 3000
     interval: 2000
@@ -30,6 +33,7 @@ contacts:
     response_timeout: 2000
     healthy_threshold: 2
 docstore:
+  scale: 1
   health_check:
     port: 3000
     interval: 2000
@@ -38,6 +42,7 @@ docstore:
     response_timeout: 2000
     healthy_threshold: 2
 document-updater:
+  scale: 1
   health_check:
     port: 3000
     interval: 2000
@@ -55,6 +60,7 @@ real-time:
     response_timeout: 2000
     healthy_threshold: 2
 filestore:
+  scale: 1
   health_check:
     port: 3000
     interval: 2000
@@ -63,6 +69,7 @@ filestore:
     response_timeout: 2000
     healthy_threshold: 2
 spelling:
+  scale: 1
   health_check:
     port: 3000
     interval: 2000
@@ -71,6 +78,7 @@ spelling:
     response_timeout: 2000
     healthy_threshold: 2
 tags:
+  scale: 1
   health_check:
     port: 3000
     interval: 2000
@@ -79,6 +87,7 @@ tags:
     response_timeout: 2000
     healthy_threshold: 2
 track-changes:
+  scale: 1
   health_check:
     port: 3000
     interval: 2000
@@ -87,7 +96,7 @@ track-changes:
     response_timeout: 2000
     healthy_threshold: 2
 web:
-  scale: 2
+  scale: 1
   health_check:
     port: 3000
     interval: 2000

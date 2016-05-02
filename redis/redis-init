@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mkdir -p /data/db
+chown -R redis:redis /data/db

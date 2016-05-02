@@ -4,6 +4,6 @@ RUN curl -L "https://grafanarel.s3.amazonaws.com/builds/grafana_2.6.0_amd64.deb"
       dpkg -i /tmp/grafana.deb
 WORKDIR /usr/share/grafana
 ADD grafana.ini /etc/grafana/grafana.ini
-ADD entrypoint /entrypoint
+ADD grafana-run /etc/services.d/grafana/run
 EXPOSE 3000
-ENTRYPOINT ["/entrypoint"]
+ENTRYPOINT ["/init"]

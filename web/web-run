@@ -1,5 +1,0 @@
-#!/usr/bin/with-contenv sh
-
-mkdir -p /app/data/{dumpFolder,logs,pdfs,uploads,zippedProjects}
-
-gosu node node app.js

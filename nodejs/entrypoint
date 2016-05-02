@@ -1,4 +1,0 @@
-#!/bin/sh -e
-
-generate_config /app/config/settings.template.coffee > /app/config/settings.coffee
-exec "$@"

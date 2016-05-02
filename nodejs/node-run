@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /app
+exec with-contenv s6-envuidgid node node app.js
