@@ -12,5 +12,5 @@ RUN apt update && apt install -y git-core build-essential && \
     apt remove -y git-core build-essential
 ADD telegraf.conf /etc/telegraf.conf
 EXPOSE 8125
-USER nobody
-CMD ["telegraf", "-config", "/etc/telegraf.conf"]
+ADD telegraf-run /etc/services.d/telegraf/run
+ENTRYPOINT ["/init"]
