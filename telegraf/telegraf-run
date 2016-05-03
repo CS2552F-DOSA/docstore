@@ -1,4 +1,4 @@
 #!/usr/bin/execlineb -P
 
 s6-setuidgid nobody
-telegraf -config /etc/telegraf.conf
+/usr/local/bin/telegraf -config /etc/telegraf.conf
