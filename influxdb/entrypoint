@@ -34,7 +34,6 @@ else
   for x in grafana metrics; do
     echo "=> Creating database: ${x}"
     influx -username=influxdb -password="rewtrewt" -execute="create database ${x}"
-    influx -username=influxdb -password="rewtrewt" -execute="grant all PRIVILEGES on ${x} to influxdb"
   done
   echo ""
 
