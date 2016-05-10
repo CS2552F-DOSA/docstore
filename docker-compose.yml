@@ -88,7 +88,7 @@ services:
         - ftp_proxy
         - no_proxy
     links:
-      - mongo
+      - mongodb
       - redis
       - telegraf
     depends_on:
@@ -121,7 +121,7 @@ services:
         - ftp_proxy
         - no_proxy
     links:
-      - mongo
+      - mongodb
       - telegraf
     depends_on:
       - nodejs
@@ -137,7 +137,7 @@ services:
         - ftp_proxy
         - no_proxy
     links:
-      - mongo
+      - mongodb
       - telegraf
     depends_on:
       - nodejs
@@ -153,7 +153,7 @@ services:
         - ftp_proxy
         - no_proxy
     links:
-      - mongo
+      - mongodb
       - redis
       - telegraf
     depends_on:
@@ -204,7 +204,7 @@ services:
         - ftp_proxy
         - no_proxy
     links:
-      - mongo
+      - mongodb
       - telegraf
     depends_on:
       - nodejs
@@ -220,7 +220,7 @@ services:
         - ftp_proxy
         - no_proxy
     links:
-      - mongo
+      - mongodb
       - telegraf
     depends_on:
       - nodejs
@@ -236,7 +236,7 @@ services:
         - ftp_proxy
         - no_proxy
     links:
-      - mongo
+      - mongodb
       - redis
       - docstore
       - doc-updater
@@ -257,7 +257,7 @@ services:
     volumes:
       - dataweb:/app/data
     links:
-      - mongo
+      - mongodb
       - redis
       - contacts
       - docstore
@@ -287,10 +287,10 @@ services:
       - dataredis:/data
     labels:
       io.rancher.scheduler.affinity:host_label: 'type=database'
-  mongo:
-    image: mic92/sharelatex-mongo
+  mongodb:
+    image: mic92/sharelatex-mongodb
     build:
-      context: mongo
+      context: mongodb
       args:
         - http_proxy
         - https_proxy
@@ -371,7 +371,7 @@ services:
     links:
       - influxdb
       - postgres
-      - mongo
+      - mongodb
       - redis
     labels:
       io.rancher.scheduler.affinity:host_label: 'type=monitoring'
