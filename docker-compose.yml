@@ -105,7 +105,7 @@ services:
         - ftp_proxy
         - no_proxy
     links:
-      - postgres
+      - postgresql
       - telegraf
     depends_on:
       - nodejs
@@ -299,13 +299,13 @@ services:
     depends_on:
       - base
     volumes:
-      - datamongo:/data/db
+      - datamongodb:/data/db
     labels:
       io.rancher.scheduler.affinity:host_label: 'type=database'
-  postgres:
-    image: mic92/sharelatex-postgres
+  postgresql:
+    image: mic92/sharelatex-postgresql
     build:
-      context: postgres
+      context: postgresql
       args:
         - http_proxy
         - https_proxy
@@ -314,7 +314,7 @@ services:
     depends_on:
       - base
     volumes:
-      - datapostgres:/var/lib/postgresql/data
+      - datapostgresql:/var/lib/postgresql/data
     labels:
       io.rancher.scheduler.affinity:host_label: 'type=database'
   influxdb:
@@ -370,7 +370,7 @@ services:
       - "8125:8125"
     links:
       - influxdb
-      - postgres
+      - postgresql
       - mongodb
       - redis
     labels:
@@ -388,7 +388,7 @@ services:
       - base
     links:
       - influxdb
-      - postgres
+      - postgresql
     ports:
       - "3000:3000"
     labels:
@@ -417,9 +417,9 @@ volumes:
       driver: local
     dataredis:
       driver: local
-    datamongo:
+    datamongodb:
       driver: local
-    datapostgres:
+    datapostgresql:
       driver: local
     dataweb:
       driver: local
