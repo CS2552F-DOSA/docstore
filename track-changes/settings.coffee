@@ -7,7 +7,7 @@ module.exports =
 			host: "telegraf"
 
 	mongo:
-		url: 'mongodb://mongo/sharelatex'
+		url: 'mongodb://mongodb/sharelatex'
 	internal:
 		trackchanges:
 			port: 3000

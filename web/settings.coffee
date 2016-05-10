@@ -34,7 +34,7 @@ module.exports =
 	# Databases
 	# ---------
 	mongo:
-		url : 'mongodb://mongo/sharelatex'
+		url : 'mongodb://mongodb/sharelatex'
 
 	redis:
 		web:

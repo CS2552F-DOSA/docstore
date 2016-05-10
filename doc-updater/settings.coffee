@@ -32,4 +32,4 @@ module.exports =
 	max_doc_length: 2 * 1024 * 1024 # 2mb
 
 	mongo:
-		url: 'mongodb://mongo/sharelatex'
+		url: 'mongodb://mongodb/sharelatex'

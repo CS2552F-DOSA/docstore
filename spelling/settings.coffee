@@ -11,7 +11,7 @@ module.exports = Settings =
 		host:"redis"
 		password:""
 	mongo:
-		url : 'mongodb://mongo/sharelatex'
+		url : 'mongodb://mongodb/sharelatex'
 
 
 	healthCheckUserId: "53c64d2fd68c8d000010bb5f"

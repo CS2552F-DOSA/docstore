@@ -12,7 +12,7 @@ module.exports =
 			database: "clsi"
 			username: "clsi"
 			password: "clsi"
-			host: "postgres"
+			host: "postgresql"
 			dialect: "postgres"
 
 	path:

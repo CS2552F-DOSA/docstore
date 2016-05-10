@@ -15,7 +15,7 @@ module.exports =
 			pass: "password"
 
 	mongo:
-		url : 'mongodb://mongo/sharelatex'
+		url : 'mongodb://mongodb/sharelatex'
 
 	redis:
 		web:
