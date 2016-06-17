@@ -8,9 +8,11 @@
   $ ansible-playbook --become -i /etc/ansible/hosts /etc/ansible/site.yml
   $ make build
   $ make upload # to registry deployed with ansible
-  $ docker exec -ti sharelatex_web_1 grunt create-admin-user --email joerg@higgsboson.tk
+  # seed database with test users
+  $ docker exec -ti sharelatex_web_1 bash
+  $ node app/js/seed.js
 ```
 
 - Rancher
 
-http://localhost:8080/env/1a5/api -> api key
+http://localhost:8080/env/1a5/api -> register api api key
