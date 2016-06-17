@@ -7,7 +7,7 @@ RUN apt install -y git-core && \
     export GOPATH=/root/go &&\
     /usr/local/go/bin/go get github.com/influxdata/kapacitor/cmd/kapacitor \
                        github.com/influxdata/kapacitor/cmd/kapacitord \
-                       git.higgsboson.tk/Mic92/kapacitor-scale && \
+                       gitlab.com/Mic92/kapacitor-scale && \
     cp "$GOPATH/bin/kapacitor-scale" "$GOPATH/bin/kapacitor" "$GOPATH/bin/kapacitord" /usr/local/bin && \
     rm -rf /usr/local/go "$GOPATH" && \
     apt remove -y git-core
