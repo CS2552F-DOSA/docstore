@@ -1,4 +1,5 @@
 /.build
+/.apt-cacher
 /cache
 /data
 rancher-compose/sharelatex/docker-compose.yml
