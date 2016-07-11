@@ -1,5 +1,10 @@
 # Sharelatex for docker
 
+```
+$ git clone git@gitlab.com:Mic92/sharelatex-docker.git
+$ git submodule update --init
+```
+
 - first deploy servers with ansible
 
 - Get docker & docker-compose
