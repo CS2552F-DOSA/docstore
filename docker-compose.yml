@@ -26,7 +26,7 @@ services:
     links:
       - loadbalancer
   agent-instance:
-    image: mic92/agent-instance:v0.8.1
+    image: mic92/agent-instance:v0.8.3
     build:
       context: agent-instance
       args:
