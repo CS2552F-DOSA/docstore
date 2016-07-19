@@ -7,4 +7,3 @@ ADD redis.conf /etc/redis.conf
 ADD redis-run /etc/services.d/redis/run
 ADD redis-init /etc/cont-init.d/redis-db
 ENTRYPOINT ["/init"]
-CMD ["redis-server"]
