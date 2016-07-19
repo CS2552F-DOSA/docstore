@@ -9,3 +9,4 @@ RUN npm install && \
     apt install zip unzip
 
 ADD settings.coffee /app/config/settings.coffee
+ADD seed-db /etc/cont-init.d/seed-db
