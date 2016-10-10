@@ -9,7 +9,7 @@ module.exports = Settings =
 			host: "0.0.0.0"
 
 	mongo:
-		url : 'mongodb://mongo/sharelatex'
+		url : 'mongodb://mongodb/sharelatex'
 
 	tags:
 		healthCheck:

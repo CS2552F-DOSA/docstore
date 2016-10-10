@@ -1,16 +1,9 @@
 loadbalancer:
-  defaults:
-    - balance leastconn
-    - retries 3
-    - timeout connect 5000ms
-    - option keep-alive
-    - option forwardfor
-    - balance source
   load_balancer_config:
     lb_cookie_stickiness_policy:
       cookie: foo
       indirect: true
-      domain: sharelatex.local
+      domain: .sharelatex.local
       nocache: true
       haproxy_config: {}
   health_check:
@@ -61,6 +54,8 @@ document-updater:
     healthy_threshold: 2
     strategy: none
 real-time:
+  routing-rules:
+    haproxy_config: "balance source"
   health_check:
     port: 3000
     interval: 2000
