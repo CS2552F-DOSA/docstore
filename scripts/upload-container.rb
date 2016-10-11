@@ -10,9 +10,15 @@ def sh(*cmd)
   system(*cmd)
 end
 
+registry = ENV["PRIVATE_REGISTRY"] || "registry.local:5000"
+
 compose = YAML.load_file(ARGV.first)
 compose["services"].each do |_, service|
-  new_name = "registry.local:5000/#{service["image"]}"
-  sh("docker", "tag", "#{service["image"]}", new_name)
-  sh("docker", "push", new_name)
+  if registry != ""
+    new_name = "#{registry}/#{service["image"]}"
+    sh("docker", "tag", "#{service["image"]}", new_name)
+    sh("docker", "push", new_name)
+  else
+    sh("docker", "push", service["image"])
+  end
 end
