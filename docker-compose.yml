@@ -297,6 +297,20 @@ services:
       io.rancher.scheduler.affinity:host_label: 'type=monitoring'
     volumes:
       - datachronograf:/data
+  loadgenerator:
+    image: mic92/sharelatex-loadgenerator
+    build:
+      context: loadgenerator
+    depends_on:
+      - base
+    links:
+      - telegraf
+    ports:
+      - "4444:4444"
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
+    volumes:
+      - /mnt/loadgenerator:/app
 volumes:
     datachronograf:
       driver: local
