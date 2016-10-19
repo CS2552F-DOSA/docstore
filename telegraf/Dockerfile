@@ -9,8 +9,11 @@ RUN apt update && apt install -y git-core build-essential && \
     make -C $GOPATH/src/github.com/influxdata/telegraf && \
     cp "$GOPATH/bin/telegraf" /usr/local/bin && \
     rm -rf /usr/local/go "$GOPATH" && \
-    apt remove -y git-core build-essential
+    curl -sL https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 > /usr/local/bin/jq && \
+    chmod +x /usr/local/bin/jq && \
+    mkdir /etc/telegraf.d
 ADD telegraf.conf /etc/telegraf.conf
 EXPOSE 8125
 ADD telegraf-run /etc/services.d/telegraf/run
+ADD update-host-list /etc/services.d/update-host-list/run
 ENTRYPOINT ["/init"]

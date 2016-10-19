@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -x -o pipefail
+
+mkdir -p /etc/telegraf.d/
+
+while true; do
+  tmp="$(mktemp)"
+  curl rancher.local:8080/v1/hosts | \
+    /usr/local/bin/jq -r '.data | map(.publicEndpoints | map(.ipAddress) | first) | map("[[inputs.docker]]\nendpoint=\"tcp://\(.):2375\"\ntimeout=\"10s\"\n") | join("\n")' > "$tmp"
+  if [ $? -eq 0 ] && ! diff "$tmp" /etc/telegraf.d/docker.conf >/dev/null 2>&1; then
+    mv "$tmp" /etc/telegraf.d/docker.conf
+    chmod 644 /etc/telegraf.d/docker.conf
+    pkill -HUP telegraf
+  else
+    rm "$tmp"
+  fi
+  sleep 60
+done
