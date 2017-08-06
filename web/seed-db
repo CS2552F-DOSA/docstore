@@ -1,0 +1,6 @@
+#!/bin/sh
+cd /app
+while ! with-contenv s6-envuidgid node node app/js/seed.js; do
+  echo "failed to seed database, retry..."
+  sleep 1
+done

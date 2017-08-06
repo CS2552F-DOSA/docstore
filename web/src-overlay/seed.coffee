@@ -8,7 +8,7 @@ User.count({}, (err, count)->
     process.exit(1)
   if count >= 1000
     console.log('already seeded, nothing to do')
-    return
+    process.exit(0)
   for user in [1..1000]
     o = {
       email: "user#{user}@higgsboson.tk",

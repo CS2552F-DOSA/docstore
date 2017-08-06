@@ -4,11 +4,6 @@ services:
     image: mic92/apt-cacher-ng
     build:
       context: apt-cacher-ng
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     volumes:
       - /data/apt:/var/cache/apt-cacher-ng
     labels:
@@ -29,11 +24,6 @@ services:
     image: mic92/agent-instance:v0.8.3
     build:
       context: agent-instance
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     command: /bin/true
     labels:
       tk.higgsboson.no-scheduling: "True"
@@ -41,11 +31,6 @@ services:
     image: mic92/sharelatex-base
     build:
       context: base
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     command: /bin/true
     labels:
       tk.higgsboson.no-scheduling: "True"
@@ -53,11 +38,6 @@ services:
     image: mic92/sharelatex-nodejs
     build:
       context: nodejs
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     command: /bin/true
     depends_on:
       - base
@@ -67,6 +47,7 @@ services:
     image: rancher/load-balancer-service
     ports:
       - 80:80
+      - 9001:9001
     links:
       - web:web1
       - real-time:real-time1
@@ -82,11 +63,6 @@ services:
     image: mic92/sharelatex-chat
     build:
       context: chat
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     links:
       - mongodb
       - redis
@@ -99,11 +75,6 @@ services:
     image: mic92/sharelatex-clsi
     build:
       context: clsi
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     links:
       - postgresql
       - telegraf
@@ -115,11 +86,6 @@ services:
     image: mic92/sharelatex-contacts
     build:
       context: contacts
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     links:
       - mongodb
       - telegraf
@@ -131,11 +97,6 @@ services:
     image: mic92/sharelatex-docstore
     build:
       context: docstore
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     links:
       - mongodb
       - telegraf
@@ -147,11 +108,6 @@ services:
     image: mic92/sharelatex-doc-updater
     build:
       context: doc-updater
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     links:
       - mongodb
       - redis
@@ -164,11 +120,6 @@ services:
     image: mic92/sharelatex-real-time
     build:
       context: real-time
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     links:
       - redis
       - doc-updater
@@ -181,11 +132,6 @@ services:
     image: mic92/sharelatex-filestore
     build:
       context: filestore
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     links:
       - telegraf
     volumes:
@@ -198,11 +144,6 @@ services:
     image: mic92/sharelatex-spelling
     build:
       context: spelling
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     links:
       - mongodb
       - telegraf
@@ -214,11 +155,6 @@ services:
     image: mic92/sharelatex-tags
     build:
       context: tags
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     links:
       - mongodb
       - telegraf
@@ -230,11 +166,6 @@ services:
     image: mic92/sharelatex-track-changes
     build:
       context: track-changes
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     links:
       - mongodb
       - redis
@@ -249,11 +180,6 @@ services:
     image: mic92/sharelatex-web
     build:
       context: web
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     volumes:
       - dataweb:/app/data
     links:
@@ -276,11 +202,6 @@ services:
     image: mic92/sharelatex-redis
     build:
       context: redis
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     depends_on:
       - base
     volumes:
@@ -291,11 +212,6 @@ services:
     image: mic92/sharelatex-mongodb
     build:
       context: mongodb
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     depends_on:
       - base
     volumes:
@@ -306,11 +222,6 @@ services:
     image: mic92/sharelatex-postgresql
     build:
       context: postgresql
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     depends_on:
       - base
     volumes:
@@ -321,11 +232,6 @@ services:
     image: mic92/sharelatex-influxdb
     build:
       context: influxdb
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     ports:
       - "8083:8083"
       - "8086:8086"
@@ -342,11 +248,6 @@ services:
       - RANCHER_SECRET_KEY=${RANCHER_SECRET_KEY}
     build:
       context: kapacitor
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     depends_on:
       - base
     volumes:
@@ -359,15 +260,10 @@ services:
     image: mic92/sharelatex-telegraf
     build:
       context: telegraf
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     depends_on:
       - base
     ports:
-      - "8125:8125"
+      - "8125:8125/udp"
     links:
       - influxdb
       - postgresql
@@ -379,11 +275,6 @@ services:
     image: mic92/sharelatex-grafana
     build:
       context: grafana
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     depends_on:
       - base
     links:
@@ -397,11 +288,6 @@ services:
     image: mic92/sharelatex-chronograf
     build:
       context: chronograf
-      args:
-        - http_proxy
-        - https_proxy
-        - ftp_proxy
-        - no_proxy
     depends_on:
       - base
     links:
@@ -412,6 +298,20 @@ services:
       io.rancher.scheduler.affinity:host_label: 'type=monitoring'
     volumes:
       - datachronograf:/data
+  loadgenerator:
+    image: mic92/sharelatex-loadgenerator
+    build:
+      context: loadgenerator
+    depends_on:
+      - base
+    links:
+      - telegraf
+    ports:
+      - "4444:4444"
+    labels:
+      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
+    volumes:
+      - /mnt/loadgenerator:/app
 volumes:
     datachronograf:
       driver: local

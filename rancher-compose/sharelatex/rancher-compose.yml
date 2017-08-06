@@ -1,106 +1,105 @@
 loadbalancer:
   load_balancer_config:
-    defaults:
-      - balance leastconn
-      - retries 3
-      - option keep-alive
-      - option forwardfor
+    lb_cookie_stickiness_policy:
+      cookie: foo
+      indirect: true
+      domain: .sharelatex.local
+      nocache: true
+      haproxy_config: {}
+  health_check:
+    port: 42
+    interval: 2000
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    response_timeout: 2000
+    strategy: none
 chat:
-  scale: 1
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
 clsi:
-  scale: 1
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
 contacts:
-  scale: 1
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
 docstore:
-  scale: 1
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
 document-updater:
-  scale: 1
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
 real-time:
-  scale: 1
+  routing-rules:
+    haproxy_config: "balance source"
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
 filestore:
-  scale: 1
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
 spelling:
-  scale: 1
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
 tags:
-  scale: 1
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
 track-changes:
-  scale: 1
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
 web:
-  scale: 1
   health_check:
     port: 3000
     interval: 2000
-    request_line: GET /health_check HTTP/1.0
     unhealthy_threshold: 3
     response_timeout: 2000
     healthy_threshold: 2
+    strategy: none
