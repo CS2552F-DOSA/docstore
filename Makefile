@@ -7,4 +7,4 @@ build: .build
 	touch .build
 rancher-compose: docker-compose.yml
 	ruby scripts/convert-compose-v2.rb docker-compose.yml > rancher-compose/sharelatex/docker-compose.yml
-	cd rancher-compose/sharelatex && rancher-compose up --upgrade --pull --batch-size 99
+	cd rancher-compose/sharelatex && rancher-compose up --upgrade --pull --batch-size 1

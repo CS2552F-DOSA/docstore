@@ -47,6 +47,7 @@ services:
     image: rancher/load-balancer-service
     ports:
       - 80:80
+      - 9001:9001
     links:
       - web:web1
       - real-time:real-time1
@@ -262,7 +263,7 @@ services:
     depends_on:
       - base
     ports:
-      - "8125:8125"
+      - "8125:8125/udp"
     links:
       - influxdb
       - postgresql
