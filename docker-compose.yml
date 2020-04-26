@@ -1,39 +1,10 @@
 version: "2"
 services:
-  apt-cacher-ng:
-    image: mic92/apt-cacher-ng
-    build:
-      context: apt-cacher-ng
-    volumes:
-      - /data/apt:/var/cache/apt-cacher-ng
-    labels:
-      tk.higgsboson.no-scheduling: "True"
-  sharelatex:
-    image: rancher/dns-service
-    links:
-      - loadbalancer
-  public-chat:
-    image: rancher/dns-service
-    links:
-      - loadbalancer
-  docs:
-    image: rancher/dns-service
-    links:
-      - loadbalancer
-  agent-instance:
-    image: mic92/agent-instance:v0.8.3
-    build:
-      context: agent-instance
-    command: /bin/true
-    labels:
-      tk.higgsboson.no-scheduling: "True"
   base:
     image: mic92/sharelatex-base
     build:
       context: base
     command: /bin/true
-    labels:
-      tk.higgsboson.no-scheduling: "True"
   nodejs:
     image: mic92/sharelatex-nodejs
     build:
@@ -41,163 +12,6 @@ services:
     command: /bin/true
     depends_on:
       - base
-    labels:
-      tk.higgsboson.no-scheduling: "True"
-  loadbalancer:
-    image: rancher/load-balancer-service
-    ports:
-      - 80:80
-      - 9001:9001
-    links:
-      - web:web1
-      - real-time:real-time1
-      - chat:chat1
-      - docstore:docstore1
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-      io.rancher.loadbalancer.target.real-time: sharelatex.local/socket.io=3000
-      io.rancher.loadbalancer.target.web: sharelatex.local=3000
-      io.rancher.loadbalancer.target.chat: public-chat.local=3000
-      io.rancher.loadbalancer.target.docstore: docs.local=3000
-  chat:
-    image: mic92/sharelatex-chat
-    build:
-      context: chat
-    links:
-      - mongodb
-      - redis
-      - telegraf
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-  clsi:
-    image: mic92/sharelatex-clsi
-    build:
-      context: clsi
-    links:
-      - postgresql
-      - telegraf
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-  contacts:
-    image: mic92/sharelatex-contacts
-    build:
-      context: contacts
-    links:
-      - mongodb
-      - telegraf
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-  docstore:
-    image: mic92/sharelatex-docstore
-    build:
-      context: docstore
-    links:
-      - mongodb
-      - telegraf
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-  doc-updater:
-    image: mic92/sharelatex-doc-updater
-    build:
-      context: doc-updater
-    links:
-      - mongodb
-      - redis
-      - telegraf
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-  real-time:
-    image: mic92/sharelatex-real-time
-    build:
-      context: real-time
-    links:
-      - redis
-      - doc-updater
-      - telegraf
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-  filestore:
-    image: mic92/sharelatex-filestore
-    build:
-      context: filestore
-    links:
-      - telegraf
-    volumes:
-      - /mnt/share/filestore:/data
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-  spelling:
-    image: mic92/sharelatex-spelling
-    build:
-      context: spelling
-    links:
-      - mongodb
-      - telegraf
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-  tags:
-    image: mic92/sharelatex-tags
-    build:
-      context: tags
-    links:
-      - mongodb
-      - telegraf
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-  track-changes:
-    image: mic92/sharelatex-track-changes
-    build:
-      context: track-changes
-    links:
-      - mongodb
-      - redis
-      - docstore
-      - doc-updater
-      - telegraf
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
-  web:
-    image: mic92/sharelatex-web
-    build:
-      context: web
-    volumes:
-      - dataweb:/app/data
-    links:
-      - mongodb
-      - redis
-      - contacts
-      - docstore
-      - doc-updater
-      - filestore
-      - spelling
-      - tags
-      - chat
-      - clsi
-      - telegraf
-    depends_on:
-      - nodejs
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=application'
   redis:
     image: mic92/sharelatex-redis
     build:
@@ -206,8 +20,14 @@ services:
       - base
     volumes:
       - dataredis:/data
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=database'
+  docstore:
+    image: mic92/sharelatex-docstore
+    build:
+      context: docstore
+    links:
+      - mongodb
+    depends_on:
+      - nodejs
   mongodb:
     image: mic92/sharelatex-mongodb
     build:
@@ -216,8 +36,6 @@ services:
       - base
     volumes:
       - datamongodb:/data/db
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=database'
   postgresql:
     image: mic92/sharelatex-postgresql
     build:
@@ -226,8 +44,6 @@ services:
       - base
     volumes:
       - datapostgresql:/var/lib/postgresql/data
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=database'
   influxdb:
     image: mic92/sharelatex-influxdb
     build:
@@ -239,89 +55,12 @@ services:
       - base
     volumes:
       - datainfluxdb:/data
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
-  kapacitor:
-    image: mic92/sharelatex-kapacitor
-    environment:
-      - RANCHER_ACCESS_KEY=${RANCHER_ACCESS_KEY}
-      - RANCHER_SECRET_KEY=${RANCHER_SECRET_KEY}
-    build:
-      context: kapacitor
-    depends_on:
-      - base
-    volumes:
-      - /data/kapacitor:/data
-    links:
-      - influxdb
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
-  telegraf:
-    image: mic92/sharelatex-telegraf
-    build:
-      context: telegraf
-    depends_on:
-      - base
-    ports:
-      - "8125:8125/udp"
-    links:
-      - influxdb
-      - postgresql
-      - mongodb
-      - redis
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
-  grafana:
-    image: mic92/sharelatex-grafana
-    build:
-      context: grafana
-    depends_on:
-      - base
-    links:
-      - influxdb
-      - postgresql
-    ports:
-      - "3000:3000"
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
-  chronograf:
-    image: mic92/sharelatex-chronograf
-    build:
-      context: chronograf
-    depends_on:
-      - base
-    links:
-      - influxdb
-    ports:
-      - "10000:10000"
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
-    volumes:
-      - datachronograf:/data
-  loadgenerator:
-    image: mic92/sharelatex-loadgenerator
-    build:
-      context: loadgenerator
-    depends_on:
-      - base
-    links:
-      - telegraf
-    ports:
-      - "4444:4444"
-    labels:
-      io.rancher.scheduler.affinity:host_label: 'type=monitoring'
-    volumes:
-      - /mnt/loadgenerator:/app
 volumes:
-    datachronograf:
-      driver: local
     dataredis:
       driver: local
     datamongodb:
       driver: local
     datapostgresql:
-      driver: local
-    dataweb:
       driver: local
     datainfluxdb:
       driver: local

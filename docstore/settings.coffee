@@ -2,9 +2,9 @@ http = require('http')
 http.globalAgent.maxSockets = 300
 
 module.exports =
-	metrics:
-		statsd:
-			host: "telegraf"
+	# metrics:
+	# 	statsd:
+	# 		host: "telegraf"
 
 	internal:
 		docstore:
