@@ -21,7 +21,8 @@ services:
     volumes:
       - dataredis:/data
   docstore:
-    image: mic92/sharelatex-docstore
+    # image: mic92/sharelatex-docstore
+    image: jzeng9/sharelatex:latest
     build:
       context: docstore
     links:
