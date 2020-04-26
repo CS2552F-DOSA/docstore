@@ -35,6 +35,8 @@ curl -X POST -H 'Content-Type: application/json' -d '{"lines": [1234]}' http://l
 # 5620bece05509b0a7a3cbc61 is project id
 # 111122223333 is the doc id
 # 1234 is the content to be posted
+
+curl -X POST -H 'Content-Type: application/json' -d '@a.txt' http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330
 ```
 
 Put (not support here)
@@ -53,5 +55,19 @@ Delete
 
 ```bash
 curl -X DELETE http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330
+```
+
+test
+
+```python
+file = open("a.txt", "w")
+file.write('{"lines": ["')
+for i in range(50000):
+	file.write("aabbcc11112222333344445555")
+
+
+file.write('"]}')
+file.close()
+exit()
 ```
 
