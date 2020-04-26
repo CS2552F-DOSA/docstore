@@ -24,19 +24,15 @@ http://localhost:8080/env/1a5/api -> register api api key
 
 
 
-```bash
-docker exec -it container-id-of-docstore bash
-```
-
 Post(update)
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' -d '{"lines": [1234]}' http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330
+curl -X POST -H 'Content-Type: application/json' -d '{"lines": [{"1234"}]}' http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330
 # 5620bece05509b0a7a3cbc61 is project id
 # 111122223333 is the doc id
 # 1234 is the content to be posted
 
-curl -X POST -H 'Content-Type: application/json' -d '@a.txt' http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330
+curl -X POST -H 'Content-Type: application/json' -d '@original_file' http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330
 ```
 
 Put (not support here)
@@ -57,17 +53,10 @@ Delete
 curl -X DELETE http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330
 ```
 
-test
+test with script
 
-```python
-file = open("a.txt", "w")
-file.write('{"lines": ["')
-for i in range(50000):
-	file.write("aabbcc11112222333344445555")
-
-
-file.write('"]}')
-file.close()
-exit()
+```bash
+python test-script.py
 ```
 
+![Screen Shot 2020-04-26 at 18.38.30](img/Screen%20Shot%202020-04-26%20at%2018.38.30.png)

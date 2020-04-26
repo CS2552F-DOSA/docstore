@@ -29,6 +29,11 @@ services:
       - mongodb
     depends_on:
       - nodejs
+    expose: 
+      - "3000"
+    ports:
+      - "3000:3000"
+
   mongodb:
     image: mic92/sharelatex-mongodb
     build:
