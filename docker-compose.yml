@@ -51,13 +51,14 @@ services:
           - docstore
   
   prod-envoy-proxy:
+    image: tiancanyu/envoy-filters:dev
     build:
-      context: .
-      dockerfile: Dockerfile-prod-envoy
-    volumes:
-      - ./prod-envoy.yaml:/etc/envoy.yaml
-    depends_on:
-      - docstore
+      context: prod-envoy
+    #   dockerfile: Dockerfile-prod-envoy
+    # volumes:
+    #   - ./prod-envoy.yaml:/etc/envoy.yaml
+    # depends_on:
+    #   - docstore
     networks:
       envoymesh:
         aliases:
