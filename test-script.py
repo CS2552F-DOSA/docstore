@@ -67,13 +67,13 @@ for i in range(test_numbers):
     # print("\n" + new_request + "\n")
 
     start_time = time.time()
-    os.system("curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+    _ = os.popen("curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
     post_time_cost += time.time() - start_time
     post_count += 1
 
     # check the file from storage
     start_time = time.time()
-    get_result = os.system("curl http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+    get_result = os.popen("curl http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
     get_time_cost += time.time() - start_time
     get_count += 1
 
