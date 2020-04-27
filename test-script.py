@@ -1,11 +1,66 @@
 import os
 import json
 import time
+import requests
 
 test_prepare_content = True
 PORT = "9999"
+post_url = "http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
+get_url = "http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
+headers = {'content-type': 'application/json'}
 
-test_numbers = 3000
+
+test_numbers = 10000
+
+
+def request_get(url, param):
+    fails = 0
+    text = ""
+    while True:
+        try:
+            if fails >= 20:
+                break
+ 
+            ret = requests.get(url=url, params=param, timeout=10)
+ 
+            if ret.status_code == 200:
+                text = json.loads(ret.text)
+            else:
+                continue
+        except:
+            fails += 1
+            print('fails: ', fails)
+        else:
+            break
+    return text
+ 
+def request_post(url, param):
+    # print("request_post")
+    fails = 0
+    text = ""
+
+    while True:
+        try:
+            if fails >= 20:
+                break
+
+ 
+            headers = {'content-type': 'application/json'}
+            ret = requests.post(url, json=param, headers=headers, timeout=10)
+
+            text = json.loads(ret.text)
+
+ 
+            if ret.status_code == 200:
+                text = json.loads(ret.text)
+            else:
+                continue
+        except:
+            fails += 1
+            print('fails: ', fails)
+        else:
+            break
+    return text
 
 
 get_count = 0
@@ -30,61 +85,77 @@ if test_prepare_content:
     file = open("original_file", "w")
     file.write('{"lines": ["')
     for i in range(2):
-        file.write("aabbcc11112222333344445555")
+        file.write("")
 
     file.write('"]}')
     file.close()
-    os.system("curl -X POST -H 'Content-Type: application/json' -d '@original_file' http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+    # os.system("curl -X POST -H 'Content-Type: application/json' -d '@original_file' http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+    
+    request_param = {'lines': ['1243']}
+    
+    # ret = requests.post(post_url, json=request_param)
+
+    ret = requests.post(post_url, json=request_param, headers=headers, timeout=10)
+    # print("ret ", ret.status_code)
+
+
 
 
 for i in range(test_numbers):
-    print("\n\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test round: ", i + 1, ", total round ", test_numbers)
+    if i % 50 == 0:
+        print("\n\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test round: ", i + 1, ", total round ", test_numbers)
     # get previous_file from storage
     start_time = time.time()
-    get_result = os.popen("curl http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+    # get_result = os.popen("curl http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+    ret = requests.get(url=get_url, timeout=10)    
     get_time_cost += time.time() - start_time
     get_count += 1
 
-    output = get_result.read()
+    # output = get_result.read()
     # print("|" + output + "|")
     # print(type(output))
     # print("-------------------")
 
-    json_result = json.loads(output)
-    lines = json_result["lines"]
+    # print(output)
+    # json_result = json.loads(output)
+    text = json.loads(ret.text)
+    lines = text["lines"]
     # print(lines)
 
     # generate new file and write to storage
     lines.append(">>> newlines <<<")
     # print(lines)
 
-    request_str = '\'{"lines": ' + list_to_str(lines) + '}\''
+    request_str = '{"lines": ' + list_to_str(lines) + '}'
 
     # print(request_str)
 
-    new_request = "curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
+    # new_request = "curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
 
     # print("\n" + new_request + "\n")
-
+    request_param = json.loads(request_str)
     start_time = time.time()
-    _ = os.popen("curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+    # _ = os.popen("curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+    ret = requests.post(post_url, json=request_param, headers=headers, timeout=10)
+    # print("ret ", ret.status_code)
     post_time_cost += time.time() - start_time
     post_count += 1
 
-    # check the file from storage
-    start_time = time.time()
-    get_result = os.popen("curl http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
-    get_time_cost += time.time() - start_time
-    get_count += 1
+    # # check the file from storage
+    # start_time = time.time()
+    # get_result = os.popen("curl http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+    # get_time_cost += time.time() - start_time
+    # get_count += 1
 
     # print(get_result)
 
 
 # compute time cost
-os.system("sleep 2")
-print("\n\n\n\n")
-print("**************************************************************************************************")
-print("total round: ", test_numbers)
-print("GET avg time: ", get_time_cost / get_count)
-print("POST avg time: ", post_time_cost / post_count)
-print("**************************************************************************************************")
+os.system("sleep 1")
+if test_numbers > 0:
+    print("\n\n\n\n")
+    print("**************************************************************************************************")
+    print("total round: ", test_numbers)
+    print("GET avg time: ", get_time_cost / get_count)
+    print("POST avg time: ", post_time_cost / post_count)
+    print("**************************************************************************************************")

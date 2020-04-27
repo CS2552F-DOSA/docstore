@@ -67,6 +67,8 @@ test with script
 ```bash
 # inside the envoy container
 apt update && apt install curl vim -y python3-pip
+pip3 install --upgrade requests
+
 python3 test-script.py
 ```
 
