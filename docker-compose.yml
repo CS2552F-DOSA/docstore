@@ -5,6 +5,10 @@ services:
     build:
       context: base
     command: /bin/true
+    networks:
+      envoymesh:
+        aliases:
+          - base
   nodejs:
     image: mic92/sharelatex-nodejs
     build:
@@ -12,6 +16,10 @@ services:
     command: /bin/true
     depends_on:
       - base
+    networks:
+      envoymesh:
+        aliases:
+          - nodejs
   redis:
     image: mic92/sharelatex-redis
     build:
@@ -20,6 +28,10 @@ services:
       - base
     volumes:
       - dataredis:/data
+    networks:
+      envoymesh:
+        aliases:
+          - redis
   docstore:
     # image: mic92/sharelatex-docstore
     image: jzeng9/sharelatex:latest
@@ -33,6 +45,26 @@ services:
       - "3000"
     ports:
       - "3000:3000"
+    networks:
+      envoymesh:
+        aliases:
+          - docstore
+  
+  prod-envoy-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile-prod-envoy
+    volumes:
+      - ./prod-envoy.yaml:/etc/envoy.yaml
+    depends_on:
+      - docstore
+    networks:
+      envoymesh:
+        aliases:
+          - prod-envoy-proxy
+    expose:
+      - "9999"
+      - "9901"
 
   mongodb:
     image: mic92/sharelatex-mongodb
@@ -42,6 +74,11 @@ services:
       - base
     volumes:
       - datamongodb:/data/db
+    networks:
+      envoymesh:
+        aliases:
+          - mongodb
+
   postgresql:
     image: mic92/sharelatex-postgresql
     build:
@@ -50,6 +87,10 @@ services:
       - base
     volumes:
       - datapostgresql:/var/lib/postgresql/data
+    networks:
+      envoymesh:
+        aliases:
+          - postgresql
   influxdb:
     image: mic92/sharelatex-influxdb
     build:
@@ -61,6 +102,10 @@ services:
       - base
     volumes:
       - datainfluxdb:/data
+    networks:
+      envoymesh:
+        aliases:
+          - influxdb
 volumes:
     dataredis:
       driver: local
@@ -70,3 +115,6 @@ volumes:
       driver: local
     datainfluxdb:
       driver: local
+
+networks:
+  envoymesh: {}

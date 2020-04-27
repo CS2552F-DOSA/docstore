@@ -1,0 +1,7 @@
+FROM tiancanyu/envoy-filters:dev
+# ADD dist/envoy /usr/local/bin/envoy
+ADD prod-envoy/Envoy-Filters /source
+WORKDIR /source
+
+RUN bazel build //:envoy
+RUN bazel-bin/envoy -c dosa_server.yaml -l info 2>&1
