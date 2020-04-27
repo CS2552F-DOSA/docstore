@@ -3,3 +3,4 @@
 /cache
 /data
 rancher-compose/sharelatex/docker-compose.yml
+prod-envoy/Envoy-Filters/
