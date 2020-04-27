@@ -65,7 +65,8 @@ curl -X DELETE http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122
 test with script
 
 ```bash
-apt install -y python3-pip
+# inside the envoy container
+apt update && apt install curl vim -y python3-pip
 python3 test-script.py
 ```
 
