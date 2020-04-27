@@ -5,14 +5,15 @@ test_prepare_content = False
 PORT = "9999"
 
 # prepare original_file and write to storage
-file = open("original_file", "w")
-file.write('{"lines": ["')
-for i in range(2):
-    file.write("aabbcc11112222333344445555")
+if test_prepare_content:
+    file = open("original_file", "w")
+    file.write('{"lines": ["')
+    for i in range(2):
+        file.write("aabbcc11112222333344445555")
 
-file.write('"]}')
-file.close()
-os.system("curl -X POST -H 'Content-Type: application/json' -d '@original_file' http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+    file.write('"]}')
+    file.close()
+    os.system("curl -X POST -H 'Content-Type: application/json' -d '@original_file' http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
 
 
 # get original_file from storage
