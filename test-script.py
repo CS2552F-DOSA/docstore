@@ -2,6 +2,7 @@ import os
 import json
 
 test_prepare_content = False
+PORT = "9999"
 
 # prepare original_file and write to storage
 file = open("original_file", "w")
@@ -11,12 +12,12 @@ for i in range(2):
 
 file.write('"]}')
 file.close()
-os.system("curl -X POST -H 'Content-Type: application/json' -d '@original_file' http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+os.system("curl -X POST -H 'Content-Type: application/json' -d '@original_file' http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
 
 
 # get original_file from storage
 
-get_result = os.popen("curl http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+get_result = os.popen("curl http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
 output = get_result.read()
 print("|" + output + "|")
 print(type(output))
@@ -58,15 +59,15 @@ request_str = '\'{"lines": ' + list_to_str(lines) + '}\''
 print(request_str)
 
 
-new_request = "curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330"
+new_request = "curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
 
 print("\n" + new_request + "\n")
 
-os.system("curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+os.system("curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
 
 
 # check the file from storage
 
-get_result = os.system("curl http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+get_result = os.system("curl http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
 
 print(get_result)
