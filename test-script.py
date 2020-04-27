@@ -81,8 +81,10 @@ for i in range(test_numbers):
 
 
 # compute time cost
+os.system("sleep 2")
 print("\n\n\n\n")
 print("**************************************************************************************************")
 print("total round: ", test_numbers)
 print("GET avg time: ", get_time_cost / get_count)
 print("POST avg time: ", post_time_cost / post_count)
+print("**************************************************************************************************")
