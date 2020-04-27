@@ -5,7 +5,7 @@ import time
 test_prepare_content = True
 PORT = "9999"
 
-test_numbers = 10000
+test_numbers = 3000
 
 
 get_count = 0
