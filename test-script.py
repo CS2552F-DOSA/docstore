@@ -10,7 +10,10 @@ get_url = "http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/11
 headers = {'content-type': 'application/json'}
 
 
-test_numbers = 10000
+begin_with_large_file = False
+
+test_numbers = 500
+initial_file_lines = 100000
 
 
 def request_get(url, param):
@@ -90,8 +93,13 @@ if test_prepare_content:
     file.write('"]}')
     file.close()
     # os.system("curl -X POST -H 'Content-Type: application/json' -d '@original_file' http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+
+    initial_content = '1234'
+    if begin_with_large_file:
+        for i in range(initial_file_lines):
+            initial_content += ">>>> large file <<<<"
     
-    request_param = {'lines': ['1243']}
+    request_param = {'lines': [initial_content]}
     
     # ret = requests.post(post_url, json=request_param)
 
