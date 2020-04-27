@@ -65,7 +65,8 @@ curl -X DELETE http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122
 test with script
 
 ```bash
-python test-script.py
+apt install -y python3-pip
+python3 test-script.py
 ```
 
 ![Screen Shot 2020-04-26 at 18.38.30](img/Screen%20Shot%202020-04-26%20at%2018.38.30.png)
