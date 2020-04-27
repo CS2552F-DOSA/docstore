@@ -27,7 +27,7 @@ http://localhost:8080/env/1a5/api -> register api api key
 Post(update)
 
 ```bash
-curl -X POST -H 'Content-Type: application/json' -d '{"lines": [{"1234"}]}' http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330
+curl -X POST -H 'Content-Type: application/json' -d '{"lines": ["1234"]}' http://localhost:3000/project/5620bece05509b0a7a3cbc61/doc/111122223330
 # 5620bece05509b0a7a3cbc61 is project id
 # 111122223333 is the doc id
 # 1234 is the content to be posted
@@ -36,7 +36,7 @@ curl -X POST -H 'Content-Type: application/json' -d '@original_file' http://loca
 
 
 
-curl -X POST -H 'Content-Type: application/json' -d '{"lines": [{"1234"}]}' http://localhost:9999/project/5620bece05509b0a7a3cbc61/doc/111122223330
+curl -X POST -H 'Content-Type: application/json' -d '{"lines": ["1234"]}' http://localhost:9999/project/5620bece05509b0a7a3cbc61/doc/111122223330
 # 5620bece05509b0a7a3cbc61 is project id
 # 111122223333 is the doc id
 # 1234 is the content to be posted
