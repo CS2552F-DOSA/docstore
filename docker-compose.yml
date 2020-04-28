@@ -9,8 +9,8 @@ services:
       envoymesh:
         aliases:
           - base
-    logging:
-      driver: none
+    # logging:
+    #   driver: none
   nodejs:
     image: mic92/sharelatex-nodejs
     build:
@@ -22,8 +22,8 @@ services:
       envoymesh:
         aliases:
           - nodejs
-    logging:
-      driver: none
+    # logging:
+    #   driver: none
   redis:
     image: mic92/sharelatex-redis
     build:
@@ -36,8 +36,8 @@ services:
       envoymesh:
         aliases:
           - redis
-    logging:
-      driver: none
+    # logging:
+      # driver: none
   docstore:
     # image: mic92/sharelatex-docstore
     image: jzeng9/sharelatex:latest
@@ -55,8 +55,8 @@ services:
       envoymesh:
         aliases:
           - docstore
-    logging:
-      driver: none
+    # logging:
+      # driver: none
   
   prod-envoy-proxy:
     image: csci2952fmicrocow/prod-storage-envoy:latest
@@ -74,8 +74,8 @@ services:
     expose:
       - "9999"
       - "9901"
-    logging:
-      driver: none
+    # logging:
+      # driver: none
 
   mongodb:
     image: mic92/sharelatex-mongodb
@@ -89,8 +89,8 @@ services:
       envoymesh:
         aliases:
           - mongodb
-    logging:
-      driver: none
+    # logging:
+      # driver: none
 
   postgresql:
     image: mic92/sharelatex-postgresql
@@ -104,8 +104,8 @@ services:
       envoymesh:
         aliases:
           - postgresql
-    logging:
-      driver: none
+    # logging:
+      # driver: none
 
   influxdb:
     image: mic92/sharelatex-influxdb
@@ -122,8 +122,8 @@ services:
       envoymesh:
         aliases:
           - influxdb
-    logging:
-      driver: none
+    # logging:
+      # driver: none
 volumes:
     dataredis:
       driver: local

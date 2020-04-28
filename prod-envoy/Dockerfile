@@ -9,7 +9,7 @@
 # CMD ["bazel-bin/envoy", "-c", "dosa_server.yaml", "-l", "info", "2>&1"]
 # # CMD ["sleep(100)"]
 
-FROM tiancanyu/envoy-filters:latest
+FROM csci2952fmicrocow/prod-storage-envoy:latest
 # CMD ["bazel-bin/envoy", "-c", "dosa_server.yaml"]
 # ADD ./prod-envoy.yaml /etc/envoy.yaml
 
