@@ -22,9 +22,6 @@
 [submodule "track-changes/src"]
 	path = track-changes/src
 	url = https://github.com/sharelatex/track-changes-sharelatex.git
-[submodule "web/src"]
-	path = web/src
-	url = https://github.com/sharelatex/web-sharelatex.git
 [submodule "chat/src"]
 	path = chat/src
 	url = https://github.com/sharelatex/chat-sharelatex.git
