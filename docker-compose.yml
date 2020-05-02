@@ -39,7 +39,6 @@ services:
     logging:
       driver: none
   docstore:
-    # image: mic92/sharelatex-docstore
     image: jzeng9/sharelatex:latest
     build:
       context: docstore
@@ -49,24 +48,36 @@ services:
       - nodejs
     expose: 
       - "3000"
-    ports:
-      - "3000:3000"
+    # ports:
+    #   - "3000:3000"
     networks:
       envoymesh:
         aliases:
           - docstore
-    logging:
-      driver: none
-  
+    # logging:
+    #   driver: none
+  test-docstore:
+    image: jzeng9/sharelatex-test
+    build:
+      context: docstore
+    links:
+      - test-mongodb
+    depends_on:
+      - nodejs
+    expose: 
+      - "3000"
+    # ports:
+    #   - "3001:3000"
+    networks:
+      envoymesh:
+        aliases:
+          - test-docstore
+    # logging:
+    #   driver: none
   prod-envoy-proxy:
     image: csci2952fmicrocow/prod-storage-envoy:latest
     build:
       context: prod-envoy
-      # dockerfile: Dockerfile
-      # volumes:
-      # - ./prod-envoy.yaml:/etc/envoy.yaml
-    # depends_on:
-      # - docstore
     networks:
       envoymesh:
         aliases:
@@ -76,6 +87,22 @@ services:
       - "9901"
     logging:
       driver: none
+
+  test-storage-envoy-proxy:
+    image: csci2952fmicrocow/test-storage-envoy:latest
+    build:
+      context: prod-envoy
+    volumes:
+      - ./test-storage-envoy.yaml:/dosa_server.yaml
+    networks:
+      envoymesh:
+        aliases:
+          - test-storage-envoy-proxy
+    expose:
+      - "9999"
+      - "9901"
+    # logging:
+    #   driver: none
 
   mongodb:
     image: mic92/sharelatex-mongodb
@@ -89,49 +116,28 @@ services:
       envoymesh:
         aliases:
           - mongodb
-    logging:
-      driver: none
-
-  postgresql:
-    image: mic92/sharelatex-postgresql
+    # logging:
+    #   driver: none
+  test-mongodb:
+    image: mic92/sharelatex-mongodb
     build:
-      context: postgresql
+      context: mongodb
     depends_on:
       - base
     volumes:
-      - datapostgresql:/var/lib/postgresql/data
+      - testdatamongodb:/data/db
     networks:
       envoymesh:
         aliases:
-          - postgresql
-    logging:
-      driver: none
-
-  influxdb:
-    image: mic92/sharelatex-influxdb
-    build:
-      context: influxdb
-    ports:
-      - "8083:8083"
-      - "8086:8086"
-    depends_on:
-      - base
-    volumes:
-      - datainfluxdb:/data
-    networks:
-      envoymesh:
-        aliases:
-          - influxdb
-    logging:
-      driver: none
+          - test-mongodb
+    # logging:
+    #   driver: none
 volumes:
     dataredis:
       driver: local
     datamongodb:
       driver: local
-    datapostgresql:
-      driver: local
-    datainfluxdb:
+    testdatamongodb:
       driver: local
 
 networks:
