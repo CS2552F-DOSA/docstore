@@ -64,8 +64,6 @@ while True:
     print("file to be modified this round: ", file_ids[file_index])
 
     ret = requests.get(url=cur_url, timeout=10)    
-    get_time_cost += time.time() - start_time
-    get_count += 1
 
     text = json.loads(ret.text)
     lines = text["lines"]
