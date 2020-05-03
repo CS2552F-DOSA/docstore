@@ -78,6 +78,8 @@ services:
     image: csci2952fmicrocow/prod-storage-envoy:latest
     build:
       context: prod-envoy
+    volumes:
+      - ./prod-envoy.yaml:/dosa_server.yaml
     networks:
       envoymesh:
         aliases:
@@ -85,8 +87,8 @@ services:
     expose:
       - "9999"
       - "9901"
-    logging:
-      driver: none
+    # logging:
+    #   driver: none
 
   test-storage-envoy-proxy:
     image: csci2952fmicrocow/test-storage-envoy:latest
