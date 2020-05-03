@@ -103,7 +103,23 @@ services:
       - "9901"
     # logging:
     #   driver: none
-
+  
+  test-service-envoy-proxy:
+    image: csci2952fmicrocow/test-service-enovy:latest
+    build:
+      context: prod-envoy
+    volumes:
+      - ./test-service-envoy.yaml:/dosa_server.yaml
+    networks:
+      envoymesh:
+        aliases:
+          - test-service-envoy-proxy
+    expose:
+      - "9999"
+      - "9901"
+    # logging:
+    #   driver: none
+  
   mongodb:
     image: mic92/sharelatex-mongodb
     build:
