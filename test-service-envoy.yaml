@@ -51,11 +51,22 @@ static_resources:
             virtual_hosts:
             - name: local_service
               domains: ["*"]
+          #     routes:
+          #     - match: { prefix: "/" }
+          #       route: { cluster: cluster_0 }
+          # http_filters:
+          #   - name: dosa
+          #     config:
+          #       cluster: cluster_1
+          #   - name: envoy.filters.http.router
               routes:
+              - match: { prefix: "/1" }
+                route: { cluster: cluster_1 }
               - match: { prefix: "/" }
                 route: { cluster: cluster_0 }
           http_filters:
             - name: dosa
               config:
-                cluster: cluster_1
+                cluster: cluster_0
+                prod_cluster: cluster_1
             - name: envoy.filters.http.router
