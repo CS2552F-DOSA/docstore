@@ -113,6 +113,7 @@ services:
       context: prod-envoy
     volumes:
       - ./test-service-envoy.yaml:/dosa_server.yaml
+      - ./test-script-from-test-envoy.py:/home/test-script-from-test-envoy.py
     networks:
       envoymesh:
         aliases:
