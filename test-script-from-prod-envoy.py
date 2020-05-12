@@ -5,8 +5,10 @@ import requests
 
 test_prepare_content = True
 PORT = "9999"
-post_url = "http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
-get_url = "http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
+post_url = "http://localhost:" + PORT + \
+    "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
+get_url = "http://localhost:" + PORT + \
+    "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
 headers = {'content-type': 'application/json'}
 
 
@@ -23,9 +25,9 @@ def request_get(url, param):
         try:
             if fails >= 20:
                 break
- 
+
             ret = requests.get(url=url, params=param, timeout=10)
- 
+
             if ret.status_code == 200:
                 text = json.loads(ret.text)
             else:
@@ -36,7 +38,8 @@ def request_get(url, param):
         else:
             break
     return text
- 
+
+
 def request_post(url, param):
     # print("request_post")
     fails = 0
@@ -47,13 +50,11 @@ def request_post(url, param):
             if fails >= 20:
                 break
 
- 
             headers = {'content-type': 'application/json'}
             ret = requests.post(url, json=param, headers=headers, timeout=10)
 
             text = json.loads(ret.text)
 
- 
             if ret.status_code == 200:
                 text = json.loads(ret.text)
             else:
@@ -73,6 +74,8 @@ post_count = 0
 post_time_cost = 0.0
 
 # in order to fit the format of shell curl command, does not use the str() in python, uses custom function instead.
+
+
 def list_to_str(l):
     ret = "["
     list_size = len(l)
@@ -82,6 +85,7 @@ def list_to_str(l):
             ret += ", "
     ret += "]"
     return ret
+
 
 # prepare original_file and write to storage
 if test_prepare_content:
@@ -98,24 +102,24 @@ if test_prepare_content:
     if begin_with_large_file:
         for i in range(initial_file_lines):
             initial_content += ">>>> large file <<<<"
-    
+
     request_param = {'lines': [initial_content]}
-    
+
     # ret = requests.post(post_url, json=request_param)
 
-    ret = requests.post(post_url, json=request_param, headers=headers, timeout=10)
+    ret = requests.post(post_url, json=request_param,
+                        headers=headers, timeout=10)
     # print("ret ", ret.status_code)
-
-
 
 
 for i in range(test_numbers):
     if i % 50 == 0:
-        print("\n\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test round: ", i + 1, ", total round ", test_numbers)
+        print("\n\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test round: ",
+              i + 1, ", total round ", test_numbers)
     # get previous_file from storage
     start_time = time.time()
     # get_result = os.popen("curl http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
-    ret = requests.get(url=get_url, timeout=10)    
+    ret = requests.get(url=get_url, timeout=10)
     get_time_cost += time.time() - start_time
     get_count += 1
 
@@ -144,7 +148,8 @@ for i in range(test_numbers):
     request_param = json.loads(request_str)
     start_time = time.time()
     # _ = os.popen("curl -X POST -H 'Content-Type: application/json' -d " + request_str + " http://localhost:" + PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
-    ret = requests.post(post_url, json=request_param, headers=headers, timeout=10)
+    ret = requests.post(post_url, json=request_param,
+                        headers=headers, timeout=10)
     # print("ret ", ret.status_code)
     post_time_cost += time.time() - start_time
     post_count += 1

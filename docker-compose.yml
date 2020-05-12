@@ -46,7 +46,7 @@ services:
       - mongodb
     depends_on:
       - nodejs
-    expose: 
+    expose:
       - "3000"
     # ports:
     #   - "3000:3000"
@@ -64,7 +64,7 @@ services:
       - test-mongodb
     depends_on:
       - nodejs
-    expose: 
+    expose:
       - "3000"
     # ports:
     #   - "3001:3000"
@@ -80,6 +80,7 @@ services:
       context: prod-envoy
     volumes:
       - ./prod-envoy.yaml:/dosa_server.yaml
+      - ./test-script-from-prod-envoy.py:/home/test-script-from-prod-envoy.py
     networks:
       envoymesh:
         aliases:
@@ -105,7 +106,7 @@ services:
       - "9901"
     # logging:
     #   driver: none
-  
+
   test-service-envoy-proxy:
     # image: csci2952fmicrocow/test-service-enovy-diff:latest
     image: csci2952fmicrocow/test-service-enovy:latest
@@ -113,6 +114,7 @@ services:
       context: prod-envoy
     volumes:
       - ./test-service-envoy.yaml:/dosa_server.yaml
+      - ./test-script-from-test-envoy.py:/home/test-script-from-test-envoy.py
     networks:
       envoymesh:
         aliases:
@@ -122,7 +124,7 @@ services:
       - "9901"
     # logging:
     #   driver: none
-  
+
   mongodb:
     image: mic92/sharelatex-mongodb
     build:
@@ -152,12 +154,12 @@ services:
     # logging:
     #   driver: none
 volumes:
-    dataredis:
-      driver: local
-    datamongodb:
-      driver: local
-    testdatamongodb:
-      driver: local
+  dataredis:
+    driver: local
+  datamongodb:
+    driver: local
+  testdatamongodb:
+    driver: local
 
 networks:
   envoymesh: {}
