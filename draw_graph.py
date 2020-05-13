@@ -42,49 +42,54 @@ from matplotlib.backends.backend_pdf import PdfPages
 # small file size, modification without file diff.
 intervals_between_each_get_and_post_request = [
     1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001]
-file_sizes = []
-
-wall_time_post = []
-wall_time_get = []
+equivalence_data_rate = [1087.8949207496967, 1558.1001731189806, 3577.2807883186606, 10209.468012170855,
+                         14019.26766653237, 30734.50332125277, 50772.664906211525, 53254.45402945136, 94575.15875100062, 116639.87342909798]
+avg_wall_time_post = [0.00836126892654984, 0.008784055709838867, 0.009643107652664185, 0.008780082066853842, 0.008708667755126954,
+                      0.00929399637075571, 0.009402847290039063, 0.00928805669148763, 0.010991811752319336, 0.010196307126213522]
+avg_wall_time_get = [0.008707839250564575, 0.00943070650100708, 0.010193461179733276, 0.009695124626159669, 0.009355008602142334,
+                     0.00980614423751831, 0.0098865807056427, 0.009338670969009399, 0.011166691780090332, 0.010202234983444214]
 
 # small file size, modification with file diff.
 intervals_between_each_get_and_post_request = [
     1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001]
-file_sizes = []
-delta_sizes = []
-wall_time_post = []
-wall_time_get = []
+equivalence_data_rate = []
+delta_data_rate = []
+avg_wall_time_post = []
+avg_wall_time_get = []
 
 # middle file size, modification without file diff.
 intervals_between_each_get_and_post_request = [
     1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001]
-file_sizes = []
-wall_time_post = []
-wall_time_get = []
+equivalence_data_rate = [1097698.9041184227, 1562240.9162185318, 3644237.7224929677, 10517567.514520163,
+                         14019804.006807439, 30668004.065373007, 97222967.6037542, 98147212.61611882, 195811580.8973321, 147109135.88207942]
+avg_wall_time_post = [0.011298871040344239, 0.01100093126296997, 0.010552000999450684, 0.010715911785761515, 0.010608302222357856,
+                      0.010589222754201582, 0.010657140186854772, 0.01132398559933617, 0.011147223986112155, 0.01119493715690844]
+avg_wall_time_get = [0.010138993263244628, 0.010814964771270752, 0.009673788547515869, 0.009448132514953612, 0.009328863620758056,
+                     0.009516868591308594, 0.010392012596130372, 0.009981150627136231, 0.010171031951904297, 0.009781568050384522]
 
 # middle file size, modification with file diff.
 intervals_between_each_get_and_post_request = [
     1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001]
-file_sizes = []
-delta_sizes = []
-wall_time_post = []
-wall_time_get = []
+equivalence_data_rate = []
+delta_data_rate = []
+avg_wall_time_post = []
+avg_wall_time_get = []
 
 
 # large file size, modification without file diff.
 intervals_between_each_get_and_post_request = [
     1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001]
-file_sizes = []
-wall_time_post = []
-wall_time_get = []
+equivalence_data_rate = []
+avg_wall_time_post = []
+avg_wall_time_get = []
 
 # large file size, modification with file diff.
 intervals_between_each_get_and_post_request = [
     1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001]
-file_sizes = []
-delta_sizes = []
-wall_time_post = []
-wall_time_get = []
+equivalence_data_rate = []
+delta_data_rate = []
+avg_wall_time_post = []
+avg_wall_time_get = []
 
 
 # test_0_ratio_1 = [1.43913]
