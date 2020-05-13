@@ -109,8 +109,8 @@ services:
     #   driver: none
 
   test-service-envoy-proxy:
-    image: csci2952fmicrocow/test-service-enovy-diff:latest
-    # image: csci2952fmicrocow/test-service-enovy:latest
+    # image: csci2952fmicrocow/test-service-enovy-diff:latest
+    image: csci2952fmicrocow/test-service-enovy:latest
     build:
       context: prod-envoy
     volumes:

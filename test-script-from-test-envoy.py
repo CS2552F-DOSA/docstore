@@ -5,7 +5,7 @@ import requests
 import random
 import string
 
-file_size = "small"  # "middle", "small", "large"
+file_size = "large"  # "middle", "small", "large"
 modification_ratio = 0.01
 str_len = 10
 
@@ -20,7 +20,7 @@ headers = {'content-type': 'application/json', 'fid_timestamp_unix_ns': '10'}
 begin_with_large_file = True
 
 
-test_numbers = 200
+test_numbers = 100
 initial_file_lines = 0
 if file_size == "large":
     initial_file_lines = 1000
