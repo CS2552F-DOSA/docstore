@@ -2,20 +2,45 @@ import os
 import json
 import time
 import requests
+import random
+import string
 
-test_prepare_content = True
+file_size = "large"  # "middle", "small"
+modification_ratio = 0.01
+str_len = 10
+between_interval = 0.1
+
+
+test_prepare_content = True  # should always be true.
 PORT = "9999"
 post_url = "http://localhost:" + PORT + \
     "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
 get_url = "http://localhost:" + PORT + \
     "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
 headers = {'content-type': 'application/json'}
+begin_with_large_file = True
+
+test_numbers = 20
+initial_file_lines = 0
+if file_size == "large":
+    initial_file_lines = 100
+elif file_size == "middle":
+    initial_file_lines = 10000
+else:
+    initial_file_lines = 100000
+# 100, 10000, 100000
 
 
-begin_with_large_file = False
+def randStr(str_len):
+    return ''.join(random.sample(
+        string.ascii_letters + string.digits, str_len))
 
-test_numbers = 500
-initial_file_lines = 100000
+
+def modify_str_list(str_list):
+    for i in range(len(str_list)):
+        if random.random() < modification_ratio:
+            str_list[i] = randStr(str_len)
+    return str_list
 
 
 def request_get(url, param):
@@ -72,10 +97,12 @@ get_time_cost = 0.0
 
 post_count = 0
 post_time_cost = 0.0
+total_file_size = 0.0
 
 # in order to fit the format of shell curl command, does not use the str() in python, uses custom function instead.
 
 
+# in order to fit the format of shell curl command, does not use the str() in python, uses custom function instead.
 def list_to_str(l):
     ret = "["
     list_size = len(l)
@@ -112,7 +139,7 @@ if test_prepare_content:
     # print("ret ", ret.status_code)
 
 
-for i in range(test_numbers):
+for i in range(1):
     if i % 50 == 0:
         print("\n\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test round: ",
               i + 1, ", total round ", test_numbers)
@@ -130,6 +157,7 @@ for i in range(test_numbers):
 
     # print(output)
     # json_result = json.loads(output)
+    print(ret.text)
     text = json.loads(ret.text)
     lines = text["lines"]
     # print(lines)
@@ -172,3 +200,4 @@ if test_numbers > 0:
     print("GET avg time: ", get_time_cost / get_count)
     print("POST avg time: ", post_time_cost / post_count)
     print("**************************************************************************************************")
+    print("test")
