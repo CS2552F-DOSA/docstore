@@ -13,21 +13,21 @@ str_len = 10
 test_prepare_content = True  # should always be true.
 PORT = "9999"
 post_url = "http://localhost:" + PORT + \
-    "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
+    "/project/5620bece05509b0a7a3cbc61/doc/111122223337"
 get_url = "http://localhost:" + PORT + \
-    "/project/5620bece05509b0a7a3cbc61/doc/111122223330"
+    "/project/5620bece05509b0a7a3cbc61/doc/111122223337"
 headers = {'content-type': 'application/json', 'fid_timestamp_unix_ns': '10'}
 begin_with_large_file = True
 
 
-test_numbers = 20
+test_numbers = 100
 initial_file_lines = 0
 if file_size == "large":
-    initial_file_lines = 100
+    initial_file_lines = 1000
 elif file_size == "middle":
-    initial_file_lines = 1000000
-else:
     initial_file_lines = 100
+else:
+    initial_file_lines = 10
 # 100, 10000, 100000
 
 
@@ -122,8 +122,8 @@ avg_wall_time_post = []
 avg_wall_time_get = []
 success_ratios = []
 
-# [1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001]
-for between_interval in [1]:
+
+for between_interval in [1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001]:
     os.system("sleep 0.02")
     print(between_interval)
     get_count = 0
@@ -145,7 +145,7 @@ for between_interval in [1]:
         file.write('"]}')
         file.close()
         os.system("curl -X POST -H 'Content-Type: application/json' -H 'fid_timestamp_unix_ns: 10' -d '@original_file' http://localhost:" +
-                  PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+                  PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223337")
 
         # initial_content = '1234'
         # if begin_with_large_file:
@@ -156,20 +156,21 @@ for between_interval in [1]:
 
         lines = []
         for i in range(initial_file_lines):
-            lines.append("1234567890")
+            lines.append(randStr(str_len))
         # print(lines)
-        request_param = '\'{"lines": ' + list_to_str(lines) + '}\''
+        request_str = '{"lines": ' + list_to_str(lines) + '}'
+        # request_param = '\'{"lines": ' + list_to_str(lines) + '}\''
+        request_param = json.loads(request_str)
 
-        os.system("curl -X POST -H 'Content-Type: application/json' -H 'fid_timestamp_unix_ns: 10' -d \'{\"lines\": [\"1234\"]}' http://localhost:" +
-                  PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223330")
+        # os.system("curl -X POST -H 'Content-Type: application/json' -H 'fid_timestamp_unix_ns: 10' -d \'{\"lines\": [\"1234\"]}' http://localhost:" +
+        #   PORT + "/project/5620bece05509b0a7a3cbc61/doc/111122223337")
 
-        # ret = requests.post(post_url, json=request_param,
-        #                     headers=headers, timeout=10)
+        ret = requests.post(post_url, json=request_param,
+                            headers=headers, timeout=10)
         # print("ret ", ret.status_code)
         os.system("sleep 1")
 
     for i in range(test_numbers):
-        os.system("sleep 0.01")
         # # os.system("sleep 0.5")
         # if i % 50 == 0:
         #     print("\n\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> test round: ",
