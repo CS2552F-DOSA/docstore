@@ -5,7 +5,7 @@ import requests
 import random
 import string
 
-file_size = "large"  # "middle", "small", "large"
+file_size = "small"  # "middle", "small", "large"
 modification_ratio = 0.01
 str_len = 10
 
@@ -20,7 +20,7 @@ headers = {'content-type': 'application/json', 'fid_timestamp_unix_ns': '10'}
 begin_with_large_file = True
 
 
-test_numbers = 100
+test_numbers = 200
 initial_file_lines = 0
 if file_size == "large":
     initial_file_lines = 1000
@@ -122,7 +122,7 @@ avg_wall_time_post = []
 avg_wall_time_get = []
 success_ratios = []
 
-
+# [1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001]
 for between_interval in [1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001]:
     os.system("sleep 0.02")
     print(between_interval)
@@ -136,6 +136,9 @@ for between_interval in [1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001
     successed_post_get_total_cost = 0.0
     post_err_count = 0.0
     # prepare original_file and write to storage
+    lines = []
+    for i in range(initial_file_lines):
+        lines.append(randStr(str_len))
     if test_prepare_content:
         file = open("original_file", "w")
         file.write('{"lines": ["')
@@ -154,9 +157,6 @@ for between_interval in [1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001
 
         # request_param = {'lines': [initial_content]}
 
-        lines = []
-        for i in range(initial_file_lines):
-            lines.append(randStr(str_len))
         # print(lines)
         request_str = '{"lines": ' + list_to_str(lines) + '}'
         # request_param = '\'{"lines": ' + list_to_str(lines) + '}\''
@@ -191,9 +191,9 @@ for between_interval in [1, 0.7, 0.3, 0.1, 0.07, 0.03, 0.01, 0.007, 0.003, 0.001
         # print(output)
         # json_result = json.loads(output)
         try:
-            print(ret.text)
-            text = json.loads(ret.text)
-            lines = text["lines"]
+            # print(ret.text)
+            # text = json.loads(ret.text)
+            # lines = text["lines"]
 
             print("between_interval: ", between_interval, " ", len(lines), "\n")
 
